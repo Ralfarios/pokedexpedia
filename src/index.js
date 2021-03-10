@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Global, css } from '@emotion/react';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { App } from './App';
-import { client } from './utils/graphql/graphql';
 import reportWebVitals from './reportWebVitals';
+import { store, persistor } from './utils/store/index';
 
 const Body = css`
   body{
@@ -25,11 +26,13 @@ const CodeStyle = css`
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ApolloProvider client={client} >
-        <Global styles={Body} />
-        <Global styles={CodeStyle} />
-        <App />
-      </ApolloProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Global styles={Body} />
+          <Global styles={CodeStyle} />
+          <App />
+        </PersistGate>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
