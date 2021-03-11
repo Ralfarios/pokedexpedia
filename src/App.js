@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { path } from './routers/path';
 import {
@@ -22,8 +22,11 @@ export const App = _ => {
         <Route exact path={path.myPokemonList}>
           <MyPokemonList />
         </Route>
-        <Route path={path.notFound}>
+        <Route exact path={path.notFound}>
           <NotFound />
+        </Route>
+        <Route path={path.placeholder}>
+          <Redirect to={{pathname: path.notFound}} />
         </Route>
       </Switch>
     </div>
