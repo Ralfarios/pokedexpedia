@@ -6,8 +6,9 @@ import { useEffect } from 'react';
 
 // import { useLocation } from 'react-router-dom' // For Query Search
 
-import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
+import { PokemonCard } from './components/PokemonCard';
 import { TypeCard } from './components/TypeCard';
+import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import { fetchAllType } from '../../utils/store/actions/pokemonAction';
 
 export const PokemonList = _ => {
@@ -74,6 +75,12 @@ export const PokemonList = _ => {
     gap: 12px;
   `;
 
+  const pokemonCarcContainerWrapper = css`
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  `;
+
   if (isLoading) return <h1>NowLoading</h1>
 
   return (
@@ -81,11 +88,11 @@ export const PokemonList = _ => {
       <MetaDecorator title="Pokédex | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
 
       {/** title */}
-      <h2 style={{ marginTop: 0 }}>Looking for Pokémon?</h2>
+      <h2 style={{ marginTop: 0, userSelect: 'none' }}>Looking for Pokémon?</h2>
       {/** title/ */}
 
       {/** searchbar */}
-      <div css={InputGroup} style={{ marginBottom: 24 }}>
+      <div css={InputGroup} style={{ marginBottom: 12 }}>
         <span css={InputGroupText} id="SearchIcon"><CgSearch /></span>
         <input type="text" css={FormControl} placeholder="Search Pokémon" aria-label="pokemon" aria-describedby="pokemon-search" />
       </div>
@@ -96,6 +103,21 @@ export const PokemonList = _ => {
         {type?.map((e, i) => <TypeCard key={i} props={e} />)}
       </div>
       {/** pokemon type card/ */}
+
+      {/** pokemon card */}
+      <div css={pokemonCarcContainerWrapper}>
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+        <PokemonCard />
+      </div>
+      {/** pokemon card/ */}
 
 
     </div>

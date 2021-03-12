@@ -76,7 +76,7 @@ export const Navbar = _ => {
       }
     });
     window.removeEventListener('scroll', _ => {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 20) {
         setBgNavbar(NavBarContainer);
       } else {
         setBgNavbar(NavBarContainerTransparent);
@@ -98,16 +98,16 @@ export const Navbar = _ => {
           : { display: 'none' }}
         >
           <img src={logo} style={{ width: 36 }} />
-          <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center' }}>Pokédex</h2>
+          <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédex</h2>
         </div>
         <div
           css={BackButtonContainer}
           style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound
             ? { display: 'none' }
             : { display: 'flex' }}
-          onClick={() => {history.goBack()}}
+          onClick={() => { history.goBack() }}
         >
-          <CgArrowLeft size="30px" style={{alignSelf: 'center', textAlign: 'center'}} />
+          <CgArrowLeft size="30px" style={{ alignSelf: 'center', textAlign: 'center' }} />
         </div>
       </div>
     </div>

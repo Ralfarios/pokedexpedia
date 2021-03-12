@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import watermark from '../../../assets/images/img_pokeballWhite.svg';
 
 export const TypeCard = ({ props }) => {
-  // console.log(props, '<< prop')
 
   const handleCol = _ => {
     switch (props?.name) {
@@ -53,17 +52,34 @@ export const TypeCard = ({ props }) => {
   };
 
   const TypeCardContainer = css`
+    -webkit-tap-highlight-color: transparent;
     ${handleCol()}
     width: 250px;
     border-radius: 1.25rem;
     display: flex;
+    cursor: pointer;
+    transition: 300ms;
+    box-shadow: 0 .08rem .16rem rgba(0,0,0,.15);
+    margin-top: 12px;
+    margin-bottom: 12px;
+    &:hover {
+      filter: brightness(75%);
+      transition: 300ms;
+    }
+    &:active {
+      filter: brightness(55%);
+      transition: 300ms;
+    }
   `;
 
+  const handleClick = _ => {
+    return console.log('clicked');
+  };
 
   return (
-    <div id="TypeCard" css={TypeCardContainer}>
-      <p style={{ fontWeight: 600, margin: '24px 12px 24px 24px', fontSize: 20, alignSelf: 'center', textTransform: 'capitalize' }}>{props?.name}</p>
-      <img src={watermark} style={{ alignSelf: 'center', height: 56, width: 56, float: 'right', marginRight: 12, opacity: 0.25 }} />
+    <div id="TypeCard" css={TypeCardContainer} onClick={() => handleClick()}>
+      <p style={{ userSelect: 'none', fontWeight: 600, margin: '24px 12px 24px 24px', fontSize: 20, alignSelf: 'center', textTransform: 'capitalize' }}>{props?.name}</p>
+      <img id="watermarkImage" src={watermark} style={{ pointerEvents: 'none', userSelect: 'none', alignSelf: 'center', height: 56, width: 56, float: 'right', marginRight: 12, opacity: 0.25 }} />
     </div>
   );
 };
