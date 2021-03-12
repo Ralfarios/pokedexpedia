@@ -83,7 +83,7 @@ export const Navbar = _ => {
         setBgNavbar(NavBarContainer);
       }
     });
-  }, [window]);
+  }, []);
 
   // console.log()
 

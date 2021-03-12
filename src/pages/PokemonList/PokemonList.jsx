@@ -9,15 +9,16 @@ import { useEffect } from 'react';
 import { PokemonCard } from './components/PokemonCard';
 import { TypeCard } from './components/TypeCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
-import { fetchAllType } from '../../utils/store/actions/pokemonAction';
+import { fetchAllPokemon, fetchAllType } from '../../utils/store/actions/pokemonAction';
 
 export const PokemonList = _ => {
-  const { type, errors, isLoading } = useSelector(state => state.pokemon);
+  const { type, pokemons, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
   // const { search } = useLocation(); // For Query Search
   // console.log(search); // For Query Search
 
   useEffect(() => {
+    dispatch(fetchAllPokemon());
     dispatch(fetchAllType());
   }, [dispatch]);
 
@@ -105,6 +106,7 @@ export const PokemonList = _ => {
   `;
 
   if (isLoading) return <h1>NowLoading</h1>
+  if (errors) return <h1>ERROR</h1>
 
   return (
     <div id="PokemonList" css={PokemonListPage}>
@@ -129,32 +131,21 @@ export const PokemonList = _ => {
 
       {/** pokemon card */}
       <div css={pokemonCarcContainerWrapper}>
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
+        {pokemons?.map((e, i) => <PokemonCard key={i} props={e} />)}
       </div>
       {/** pokemon card/ */}
 
 
       <nav aria-label="Page navigation example">
-        <ul className="pagination justify-content-center" style={{marginTop: 16, marginBottom: 16}}>
+        <ul className="pagination justify-content-center" style={{ marginTop: 16, marginBottom: 16 }}>
           <li className="page-item disabled">
-            <a className="page-link" href="#" tabIndex="-1" aria-disabled="true">Previous</a>
+            <a className="page-link" href="/" tabIndex="-1" aria-disabled="true">Previous</a>
           </li>
-          <li className="page-item"><a className="page-link" href="#">1</a></li>
-          <li className="page-item"><a className="page-link" href="#">2</a></li>
-          <li className="page-item"><a className="page-link" href="#">3</a></li>
+          <li className="page-item"><a className="page-link" href="/">1</a></li>
+          <li className="page-item"><a className="page-link" href="/">2</a></li>
+          <li className="page-item"><a className="page-link" href="/">3</a></li>
           <li className="page-item">
-            <a className="page-link" href="#">Next</a>
+            <a className="page-link" href="/">Next</a>
           </li>
         </ul>
       </nav>

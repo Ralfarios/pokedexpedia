@@ -6,7 +6,7 @@ const init = {
 
 export const PokemonReducer = (state = init, action) => {
   switch (action.type) {
-    case 'GET_ALL_MYPOKEMON':
+    case 'GET_ALL_POKEMONS':
       return { ...state, pokemons: action.payload, isLoading: false };
     case 'FETCH_POKEMON_TYPE':
       return { ...state, type: action.payload, isLoading: false };
