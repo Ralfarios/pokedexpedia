@@ -41,7 +41,7 @@ export const Navbar = _ => {
     justify-content: space-between;
     background-color: transparent;
     height: 64px;
-    padding: 0 24px;
+    padding: 12px 24px;
     transition: background-color .15s ease-out, padding .15s ease-out;
   `;
 
