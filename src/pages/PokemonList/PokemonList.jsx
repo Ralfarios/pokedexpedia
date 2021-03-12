@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // import { useLocation } from 'react-router-dom' // For Query Search
 
@@ -14,13 +14,23 @@ import { fetchAllPokemon, fetchAllType } from '../../utils/store/actions/pokemon
 export const PokemonList = _ => {
   const { type, pokemons, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
+  const [pokemonCount, setPokemonCount] = useState(0);
+  const [curPage, setCurPage] = useState(1);
+  // SET PAGINATION TO ELIPSIS
   // const { search } = useLocation(); // For Query Search
   // console.log(search); // For Query Search
 
   useEffect(() => {
     dispatch(fetchAllPokemon());
     dispatch(fetchAllType());
+
+    fetch('https://pokeapi.co/api/v2/pokemon')
+      .then(response => response.json())
+      .then(({ count }) => setPokemonCount(Math.ceil(count / 12)))
+
   }, [dispatch]);
+
+
 
   const PokemonListPage = css`
     @media only screen and (max-width: 575px) {
@@ -107,7 +117,6 @@ export const PokemonList = _ => {
 
   if (isLoading) return <h1>NowLoading</h1>
   if (errors) return <h1>ERROR</h1>
-
   return (
     <div id="PokemonList" css={PokemonListPage}>
       <MetaDecorator title="Pokédex | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
@@ -138,18 +147,28 @@ export const PokemonList = _ => {
 
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-center" style={{ marginTop: 16, marginBottom: 16 }}>
-          <li className="page-item disabled">
-            <a className="page-link" href="/" tabIndex="-1" aria-disabled="true">Previous</a>
-          </li>
-          <li className="page-item"><a className="page-link" href="/">1</a></li>
-          <li className="page-item"><a className="page-link" href="/">2</a></li>
-          <li className="page-item"><a className="page-link" href="/">3</a></li>
           <li className="page-item">
-            <a className="page-link" href="/">Next</a>
+            <div
+              className="page-link"
+              style={{ cursor: 'pointer' }}
+              onClick={() => setCurPage((prev) => prev === 0 ? prev : prev - 1)}
+            >&laquo;</div>
+          </li>
+          {Array(pokemonCount)?.fill(null)?.map((_, i) =>
+            <li key={i + 1} className={curPage === i ? 'page-item active' : 'page-item'}>
+              <a className="page-link" href="/">{i + 1}</a>
+            </li>
+          )}
+          <li className="page-item">
+            <div
+              className="page-link"
+              style={{ cursor: 'pointer' }}
+              onClick={() => setCurPage((next) => next === pokemonCount-1 ? next : next + 1)}
+            >&raquo;</div>
           </li>
         </ul>
       </nav>
 
-    </div>
+    </div >
   );
 };
