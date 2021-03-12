@@ -1,6 +1,7 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { Bottombar } from './components/layout/Bottombar';
+import { Navbar } from './components/layout/Navbar';
 import { path } from './routers/path';
 import {
   PokemonList,
@@ -12,6 +13,7 @@ import {
 export const App = _ => {
   return (
     <div id="App">
+      <Navbar />
       <Bottombar />
 
       <Switch>

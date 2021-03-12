@@ -22,7 +22,7 @@ export const Bottombar = _ => {
       z-index: 999;
       justify-content: center;
       display: flex;
-      box-shadow: 0 .05rem .1rem rgba(0,0,0,.15);
+      box-shadow: 0 .08rem .16rem rgba(0,0,0,.15);
     }
     @media only screen and (min-width: 575px) {
       display: none;
@@ -76,17 +76,38 @@ export const Bottombar = _ => {
   const { pathname } = useLocation();
 
   return (
-    <div id="Bottombar" css={BottomBar} style={pathname === path.notFound ? { display: 'none' } : { display: 'flex', justifyContent: 'center' }}>
+    <div
+      id="Bottombar"
+      css={BottomBar}
+      style={pathname === path.notFound
+        ? { display: 'none' }
+        : { display: 'flex', justifyContent: 'center' }}
+    >
       <div css={BottomBarContainer}>
 
+        {/** icons */}
         <div style={{ display: 'flex', padding: 8 }}>
-          <Link to={path.pokemonList} style={{ textDecoration: 'none', color: '#fff' }} css={pathname === path.pokemonList ? ButtonContainerActive : ButtonContainer}>
-            <CgPokemon size="2em" css={pathname === path.pokemonList ? ButtonIconActive : ButtonIcon } />
+          <Link
+            to={path.pokemonList}
+            style={{ textDecoration: 'none', color: '#fff' }}
+            css={pathname === path.pokemonList
+              ? ButtonContainerActive
+              : ButtonContainer}
+          >
+            <CgPokemon size="2em" css={pathname === path.pokemonList ? ButtonIconActive : ButtonIcon} />
           </Link>
-          <Link to={path.myPokemonList} style={{ textDecoration: 'none', color: '#fff' }} css={pathname === path.myPokemonList ? ButtonContainerActive : ButtonContainer}>
-            <CgHeart size="2em" css={pathname === path.myPokemonList ? ButtonIconActive : ButtonIcon } />
+
+          <Link
+            to={path.myPokemonList}
+            style={{ textDecoration: 'none', color: '#fff' }}
+            css={pathname === path.myPokemonList
+              ? ButtonContainerActive
+              : ButtonContainer}
+          >
+            <CgHeart size="2em" css={pathname === path.myPokemonList ? ButtonIconActive : ButtonIcon} />
           </Link>
         </div>
+        {/** icons/ */}
 
       </div>
     </div>
