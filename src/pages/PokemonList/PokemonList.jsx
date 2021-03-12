@@ -26,7 +26,7 @@ export const PokemonList = _ => {
       padding-left: 24px;
       padding-right: 24px;
       padding-top: 12px;
-      padding-bottom: 90px;
+      padding-bottom: 72px;
     }
     @media only screen and (min-width: 575px) {
       padding-left: 24px;
@@ -144,6 +144,20 @@ export const PokemonList = _ => {
       </div>
       {/** pokemon card/ */}
 
+
+      <nav aria-label="Page navigation example">
+        <ul className="pagination justify-content-center" style={{marginTop: 16, marginBottom: 16}}>
+          <li className="page-item disabled">
+            <a className="page-link" href="#" tabIndex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <li className="page-item"><a className="page-link" href="#">1</a></li>
+          <li className="page-item"><a className="page-link" href="#">2</a></li>
+          <li className="page-item"><a className="page-link" href="#">3</a></li>
+          <li className="page-item">
+            <a className="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
 
     </div>
   );

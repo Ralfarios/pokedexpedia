@@ -31,18 +31,18 @@ export const PokemonCard = ({ props }) => {
 
   return (
     <div id="PokemonCard" css={PokemonCardContainer}>
-      <h3 style={{ margin: 12, textOverflow: 'ellipsis', overflow: 'hidden' }}>Bulbasauraaaa</h3>
+      <h3 style={{ margin: 12, marginBottom: 4, textOverflow: 'ellipsis', overflow: 'hidden' }}>Bulbasauraaaa</h3>
       <div className="row" style={{ marginLeft: 12, marginRight: 12, paddingBottom: 12 }}>
-        <div className="col-6" style={{ padding: 0 }}>
-          <div style={{ margin: 4, backgroundColor: '#fafafa6a', color: 'white', borderRadius: 8, textAlign: 'center' }}>
+        <div className="col-6" style={{ padding: 0, alignSelf: 'center' }}>
+          <div style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>
             <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em' }}>Grass</p>
           </div>
-          <div style={{ margin: 4, backgroundColor: '#fafafa6a', color: 'white', borderRadius: 8, textAlign: 'center' }}>
+          <div style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>
             <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em' }}>Poison</p>
           </div>
         </div>
         <div className="col-6" style={{ padding: 0 }}>
-          <img style={{ width: '100%' }} src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" />
+          <img style={{ width: '100%', zIndex: 1500 }} src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" />
         </div>
       </div>
     </div>
