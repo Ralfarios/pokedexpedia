@@ -21,6 +21,21 @@ export const PokemonList = _ => {
     dispatch(fetchAllType());
   }, [dispatch]);
 
+  const PokemonListPage = css`
+    @media only screen and (max-width: 575px) {
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-top: 12px;
+      padding-bottom: 90px;
+    }
+    @media only screen and (min-width: 575px) {
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+  `;
+
   const InputGroup = css`  
     position: relative;
     display: flex;
@@ -48,7 +63,7 @@ export const PokemonList = _ => {
 
   const FormControl = css`
     border-left: none;
-    height: 30px;
+    height: 46px;
     display: block;
     flex: 2;
     width: 100%;
@@ -73,22 +88,30 @@ export const PokemonList = _ => {
     flex-wrap: nowrap;
     overflow-x  : auto;
     gap: 12px;
+    margin-bottom: 12px;
   `;
 
   const pokemonCarcContainerWrapper = css`
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    @media only screen and (min-width: 575px) {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+    }
+    @media only screen and (max-width: 575px) {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    }
   `;
 
   if (isLoading) return <h1>NowLoading</h1>
 
   return (
-    <div id="PokemonList" style={{ paddingLeft: 24, paddingRight: 24 }}>
+    <div id="PokemonList" css={PokemonListPage}>
       <MetaDecorator title="Pokédex | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
 
       {/** title */}
-      <h2 style={{ marginTop: 0, userSelect: 'none' }}>Looking for Pokémon?</h2>
+      <h2 style={{ marginTop: 0, marginBottom: 18, userSelect: 'none' }}>Looking for Pokémon?</h2>
       {/** title/ */}
 
       {/** searchbar */}
@@ -106,6 +129,8 @@ export const PokemonList = _ => {
 
       {/** pokemon card */}
       <div css={pokemonCarcContainerWrapper}>
+        <PokemonCard />
+        <PokemonCard />
         <PokemonCard />
         <PokemonCard />
         <PokemonCard />

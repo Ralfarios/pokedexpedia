@@ -26,11 +26,11 @@ export const Navbar = _ => {
     align-items: center;
     justify-content: space-between;
     background-color: #fff;
-    height: 56px;
-    padding: 0 16px;
+    height: 72px;
+    padding: 0px 24px;
     box-shadow: 0 .08rem .16rem rgba(0,0,0,.15);
     border-radius: 0 0 1.25rem 1.25rem;
-    transition: background-color .15s ease-out, padding .15s ease-out;
+    transition: .15s ease-in-out;
   `;
 
   const NavBarContainerTransparent = css`
@@ -40,9 +40,10 @@ export const Navbar = _ => {
     align-items: center;
     justify-content: space-between;
     background-color: transparent;
-    height: 64px;
-    padding: 12px 24px;
-    transition: background-color .15s ease-out, padding .15s ease-out;
+    height: 72px;
+    padding: 0px 24px;
+    box-shadow: 0;
+    transition: .15s ease-in-out;
   `;
 
   const BackButtonContainer = css`
@@ -68,21 +69,23 @@ export const Navbar = _ => {
   const [bgNavbar, setBgNavbar] = useState(NavBarContainerTransparent);
 
   useEffect(() => {
-    window.addEventListener('scroll', _ => {
-      if (window.scrollY > 20) {
-        setBgNavbar(NavBarContainer);
-      } else {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < 10) {
         setBgNavbar(NavBarContainerTransparent);
+      } else {
+        setBgNavbar(NavBarContainer);
       }
     });
-    window.removeEventListener('scroll', _ => {
-      if (window.scrollY > 20) {
-        setBgNavbar(NavBarContainer);
-      } else {
+    window.removeEventListener('scroll', () => {
+      if (window.scrollY < 10) {
         setBgNavbar(NavBarContainerTransparent);
+      } else {
+        setBgNavbar(NavBarContainer);
       }
     });
   }, [window]);
+
+  // console.log()
 
   return (
     <div

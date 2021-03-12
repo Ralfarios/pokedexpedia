@@ -10,6 +10,10 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { store, persistor } from './utils/store/index';
 
+import 'bootstrap';
+import '@popperjs/core';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const Body = css`
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
 
