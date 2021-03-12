@@ -1,5 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import { Bottombar } from './components/layout/Bottombar';
 import { path } from './routers/path';
 import {
   PokemonList,
@@ -11,6 +12,7 @@ import {
 export const App = _ => {
   return (
     <div id="App">
+      <Bottombar />
 
       <Switch>
         <Route exact path={path.pokemonList}>
@@ -26,7 +28,7 @@ export const App = _ => {
           <NotFound />
         </Route>
         <Route path={path.placeholder}>
-          <Redirect to={{pathname: path.notFound}} />
+          <Redirect to={{ pathname: path.notFound }} />
         </Route>
       </Switch>
     </div>

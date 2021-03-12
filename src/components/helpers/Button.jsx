@@ -1,5 +1,6 @@
-import styled from '@emotion/styled';
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import styled from '@emotion/styled';
 
 const handleCol = props => {
   switch (props.status) {
@@ -72,7 +73,7 @@ const handleDropShadow = props => {
 };
 
 export const Button = styled.button`
--webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;

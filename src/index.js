@@ -13,11 +13,16 @@ import { store, persistor } from './utils/store/index';
 const Body = css`
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
 
+  html {
+    background-color: #f0f2f5;
+  }
+
   body{
     margin: 0;
     font-family: Rubik, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #f0f2f5;
   }
 `;
 
