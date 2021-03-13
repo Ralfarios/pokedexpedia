@@ -49,29 +49,34 @@ export const fetchSearchPokemon = val => {
     try {
       // console.log(val)
       // next({ type: 'LOADING' });
-      // next({ type: 'ERASE_DATA_POKEMONS' });
+      next({ type: 'ERASE_DATA_POKEMONS' });
 
-      if (val.length <= 3) return console.log('need more than 3');
-      return console.log(val);
+      if (val.length <= 3) return next({ type: 'GET_ALL_POKEMONS', payload: [] });
 
-      // if (val.length <= 3) return next({ type: 'GET_ALL_POKEMONS', payload: [] });
+      let output = [];
 
-      // let output = [];
+      const response = await fetch(url + `/pokemon?offset=0&limit=1118`);
+      const { results } = await response.json();
 
-      // const response = await fetch(url + `/pokemon?offset=0&limit=50`);
-      // const { results } = await response.json();
+      Promise.all(
+        results.map(e => {
+          return fetch(e.url)
+            .then(response => response.json())
+            .then(pokedata => output.push(pokedata))
+            .catch(err => console.log(err));
+        })
+      )
+        .then(_ => {
+          let temp = []
+          for (let i = 0; i < output.length; i++) {
+            if (output[i].name.toLowerCase().includes(val.toLowerCase())) {
+              temp.push(output[i])
+            };
+          }
 
-      // Promise.all(
-      //   results.map(e => {
-      //     return fetch(e.url)
-      //       .then(response => response.json())
-      //       .then(pokedata => output.push(pokedata))
-      //       .catch(err => console.log(err));
-      //   })
-      // )
-      //   .then(_ => {
-      //     return next({ type: 'GET_ALL_POKEMONS', payload: output });
-      //   });
+          console.log(temp)
+          // return next({ type: 'GET_ALL_POKEMONS', payload: temp });
+        });
     } catch (err) {
       console.log(err);
     }

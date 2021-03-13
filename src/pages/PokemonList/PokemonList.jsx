@@ -71,9 +71,11 @@ export const PokemonList = _ => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(delayedSearch);
+    if (pathname === path.pokemonSearch) {
+      dispatch(delayedSearch);
 
-    return delayedSearch.cancel;
+      return delayedSearch.cancel;
+    }
   }, [searchVal, delayedSearch]);
 
   const PokemonListPage = css`
