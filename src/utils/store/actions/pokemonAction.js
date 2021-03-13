@@ -45,6 +45,41 @@ export const fetchAllPokemon = (offset, limit) => {
   };
 };
 
+export const fetchTypePokemon = type => {
+  return async next => {
+    try {
+      // next({ type: 'LOADING' });
+
+      let output = [];
+
+      const response = await fetch(url + `/type`);
+      const { results } = await response.json();
+
+      Promise.all(
+        results.map(e => {
+          if (e.name === type) {
+            return fetch(e.url)
+              .then(response => response.json())
+              .then(typePoke => typePoke.pokemon.map(e => {
+                fetch(e.pokemon.url)
+                  .then(res => res.json())
+                  .then(detailTypePoke => console.log(detailTypePoke))
+                  .catch(err => console.log(err))
+              }))
+              .catch(err => console.log(err))
+          }
+          return null;
+        })
+      )
+
+      // await console.log(results, '<<<<<');
+
+    } catch (err) {
+      console.log(err);
+    };
+  };
+};
+
 export const fetchSearchPokemon = val => {
   return async next => {
     try {
@@ -65,7 +100,7 @@ export const fetchSearchPokemon = val => {
             return fetch(e.url)
               .then(response => response.json())
               .then(pokedata => output.push(pokedata))
-              .catch(err => console.warn(err));
+              .catch(err => console.log(err));
           }
           return null;
         })

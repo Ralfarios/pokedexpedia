@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { PokemonCard } from '../../components/layout/PokemonCard';
 import { TypeCard } from '../../components/layout/TypeCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
-import { fetchAllType } from '../../utils/store/actions/pokemonAction';
+import { fetchAllType, fetchTypePokemon } from '../../utils/store/actions/pokemonAction';
 
 export const PokemonType = _ => {
   const { pokemontype } = useParams();
@@ -16,7 +16,8 @@ export const PokemonType = _ => {
 
   useEffect(() => {
     dispatch(fetchAllType());
-  }, [dispatch])
+    dispatch(fetchTypePokemon(pokemontype))
+  }, [dispatch, pokemontype])
 
   const PokemonListPage = css`
     @media only screen and (max-width: 575px) {
