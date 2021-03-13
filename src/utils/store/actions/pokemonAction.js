@@ -24,7 +24,7 @@ export const fetchAllPokemon = (offset, limit) => {
 
       let output = [];
 
-      const response = await fetch(url + `/pokemon?offset=${offset}limit=${limit}`);
+      const response = await fetch(url + `/pokemon?offset=${offset}&limit=${limit}`);
       const { results } = await response.json();
 
       Promise.all(
@@ -41,6 +41,40 @@ export const fetchAllPokemon = (offset, limit) => {
     } catch (err) {
       console.log(err);
     };
+  };
+};
+
+export const fetchSearchPokemon = val => {
+  return async next => {
+    try {
+      // console.log(val)
+      // next({ type: 'LOADING' });
+      // next({ type: 'ERASE_DATA_POKEMONS' });
+
+      if (val.length <= 3) return console.log('need more than 3');
+      return console.log(val);
+
+      // if (val.length <= 3) return next({ type: 'GET_ALL_POKEMONS', payload: [] });
+
+      // let output = [];
+
+      // const response = await fetch(url + `/pokemon?offset=0&limit=50`);
+      // const { results } = await response.json();
+
+      // Promise.all(
+      //   results.map(e => {
+      //     return fetch(e.url)
+      //       .then(response => response.json())
+      //       .then(pokedata => output.push(pokedata))
+      //       .catch(err => console.log(err));
+      //   })
+      // )
+      //   .then(_ => {
+      //     return next({ type: 'GET_ALL_POKEMONS', payload: output });
+      //   });
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
