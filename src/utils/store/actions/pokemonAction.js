@@ -28,12 +28,13 @@ export const fetchAllPokemon = (offset, limit) => {
       const { results } = await response.json();
 
       Promise.all(
-        results.map(e => {
+        results.map(async e => {
           return fetch(e.url)
             .then(response => response.json())
             .then(pokedata => output.push(pokedata))
             .catch(err => console.log(err));
         })
+
       )
         .then(_ => {
           return next({ type: 'GET_ALL_POKEMONS', payload: output });
@@ -51,7 +52,7 @@ export const fetchSearchPokemon = val => {
       next({ type: 'LOADING' });
       next({ type: 'RESET_SEARCH_RESULT' });
 
-      if (val.length <= 3) return next({ type: 'GET_ALL_POKEMONS', payload: [] });
+      if (val.length <= 3) return next({ type: 'GET_SEARCH_RESULT', payload: ['insertKeyword'] });
 
       let output = [];
 
@@ -65,10 +66,12 @@ export const fetchSearchPokemon = val => {
               .then(response => response.json())
               .then(pokedata => output.push(pokedata))
               .catch(err => console.warn(err));
-          };
+          }
+          return null;
         })
       )
         .then(_ => {
+          if (output.length === 0) output.push('notFound')
           return next({ type: 'GET_SEARCH_RESULT', payload: output });
         });
     } catch (err) {

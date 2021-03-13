@@ -1,10 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import watermark from '../../../assets/images/img_pokeballWhite.svg';
+import { useHistory } from 'react-router-dom';
+
+import watermark from '../../assets/images/img_pokeballWhite.svg';
+import { path } from '../../routers/path';
 
 export const TypeCard = ({ props }) => {
+  const history = useHistory();
 
   const handleCol = _ => {
+    if (props === undefined) return 'color: #fff; background-color: #00d2d3;';
     switch (props?.name) {
       case 'normal':
         return 'color: #fff; background-color: #00d2d3;';
@@ -73,7 +78,10 @@ export const TypeCard = ({ props }) => {
   `;
 
   const handleClick = _ => {
-    return console.log('clicked');
+    // return console.log(props);
+    if (props.url === '/') return history.push(path.pokemonList);
+
+    return history.push('/type/' + props.name);
   };
 
   // console.log(props);

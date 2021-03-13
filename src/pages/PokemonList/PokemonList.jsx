@@ -2,50 +2,30 @@
 import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
-import { debounce } from 'lodash';
-import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useHistory,useLocation } from 'react-router-dom';
 
-import { useLocation } from 'react-router-dom' // For Query Search
-
-import { PokemonCard } from './components/PokemonCard';
-import { TypeCard } from './components/TypeCard';
+import { PokemonCard } from '../../components/layout/PokemonCard';
+import { TypeCard } from '../../components/layout/TypeCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import {
   fetchAllPokemon,
   fetchAllType,
-  fetchSearchPokemon,
   paginationCount,
-  resetSearch
 } from '../../utils/store/actions/pokemonAction';
 import { path } from '../../routers/path';
 
 export const PokemonList = _ => {
   const itemsPerPage = 12;
-  const { type, pokemons, searchResult, pagination, errors, isLoading } = useSelector(state => state.pokemon);
+  const { type, pokemons, pagination, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
   const history = useHistory();
   const [curPage, setCurPage] = useState(1);
   const [arrPagination, setArrPagination] = useState([]);
-  const [searchVal, setSearchVal] = useState('');
   const { pathname } = useLocation(); // For Query Search
 
-  const updateSearch = _ => {
-    return fetchSearchPokemon(searchVal);
-  };
-
-  const delayedSearch = useCallback(debounce(updateSearch(), 1000), [searchVal]);
-
-  const handleChangeSearch = e => {
-    setSearchVal(e.target.value);
-  };
-
   const handleSearchPage = _ => {
-    if (pathname === path.pokemonList) {
-      dispatch(resetSearch());
-      setSearchVal('');
-      return history.push(path.pokemonSearch);
-    };
+    return history.push(path.pokemonSearch);
   };
 
   const pages = [];
@@ -59,7 +39,7 @@ export const PokemonList = _ => {
 
   useEffect(() => {
     if (pathname === path.pokemonList) {
-      dispatch(fetchAllPokemon((itemsPerPage * curPage) - itemsPerPage, itemsPerPage * curPage));
+      dispatch(fetchAllPokemon((itemsPerPage * curPage) - itemsPerPage, itemsPerPage));
       dispatch(paginationCount());
 
       if (curPage < 3) {
@@ -75,14 +55,6 @@ export const PokemonList = _ => {
   useEffect(() => {
     dispatch(fetchAllType());
   }, [dispatch])
-
-  useEffect(() => {
-    if (pathname === path.pokemonSearch) {
-      dispatch(delayedSearch);
-
-      return delayedSearch.cancel;
-    }
-  }, [searchVal, delayedSearch]);
 
   const PokemonListPage = css`
     @media only screen and (max-width: 575px) {
@@ -190,81 +162,66 @@ export const PokemonList = _ => {
           aria-label="pokemon"
           aria-describedby="pokemon-search"
           onClick={_ => handleSearchPage()}
-          onChange={handleChangeSearch}
-          value={searchVal}
+          defaultValue=''
         />
       </div>
       {/** searchbar/ */}
 
-      {/** POKEMON LIST CONTENT */}
-      <div style={pathname === path.pokemonSearch ? { display: 'none' } : { display: 'block' }}>
-        {/** pokemon type card */}
-        <h5 style={{ marginBottom: 0 }}>Type</h5>
-        <div css={horizontalScrollContainer}>
-          <TypeCard props={{ name: 'all', url: '/' }} />
-          {type?.map((e, i) => <TypeCard key={i} props={e} />)}
-        </div>
-        {/** pokemon type card/ */}
+      {/** pokemon type card */}
+      <h5 style={{ marginBottom: 0 }}>Type</h5>
+      <div css={horizontalScrollContainer}>
+        <TypeCard props={{ name: 'all', url: '/' }} />
+        {type?.map((e, i) => <TypeCard key={i} props={e} />)}
+      </div>
+      {/** pokemon type card/ */}
 
-        {/** pokemon card */}
-        <h5 style={{ marginBottom: 12 }}>Pokédex</h5>
-        <div css={pokemonCardContainerWrapper}>
-          {pokemons?.map((e) => {
-            return <PokemonCard key={e.id} props={e} />
-          })}
-        </div>
-        {/** pokemon card/ */}
+      {/** pokemon card */}
+      <h5 style={{ marginBottom: 12 }}>Pokédex</h5>
+      <div css={pokemonCardContainerWrapper}>
+        {pokemons?.map((e) => {
+          return <PokemonCard key={e.id} props={e} />
+        })}
+      </div>
+      {/** pokemon card/ */}
 
-        {/** pagination */}
-        <nav aria-label="pagination-pokelist">
-          <ul className="pagination justify-content-center" style={{ marginTop: 16, marginBottom: 16 }}>
-            <li className="page-item">
-              <div
+      {/** pagination */}
+      <nav aria-label="pagination-pokelist">
+        <ul className="pagination justify-content-center" style={{ marginTop: 16, marginBottom: 16 }}>
+          <li className="page-item">
+            <div
+              className="page-link"
+              style={{ cursor: 'pointer' }}
+              onClick={() => setCurPage((prev) => prev === 0 ? prev : prev - 1)}
+            >&laquo;</div>
+          </li>
+          {arrPagination?.map((e, i) =>
+            <li
+              key={i}
+              className={curPage === e
+                ? 'page-item active'
+                : (e === '...'
+                  ? 'page-item disabled'
+                  : 'page-item')}
+            >
+              <button
                 className="page-link"
                 style={{ cursor: 'pointer' }}
-                onClick={() => setCurPage((prev) => prev === 0 ? prev : prev - 1)}
-              >&laquo;</div>
+                onClick={() => handlePage(e)}
+                disabled={e === '...' ? true : false}
+              >{e}</button>
             </li>
-            {arrPagination?.map((e, i) =>
-              <li
-                key={i}
-                className={curPage === e
-                  ? 'page-item active'
-                  : (e === '...'
-                    ? 'page-item disabled'
-                    : 'page-item')}
-              >
-                <button
-                  className="page-link"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => handlePage(e)}
-                  disabled={e === '...' ? true : false}
-                >{e}</button>
-              </li>
-            )}
-            <li className="page-item">
-              <div
-                className="page-link"
-                style={{ cursor: 'pointer' }}
-                onClick={() => setCurPage((next) => next === pagination.length ? next : next + 1)}
-              >&raquo;</div>
-            </li>
-          </ul>
-        </nav>
-        {/** pagination/ */}
-      </div>
-      {/** POKEMON LIST CONTENT/ */}
+          )}
+          <li className="page-item">
+            <div
+              className="page-link"
+              style={{ cursor: 'pointer' }}
+              onClick={() => setCurPage((next) => next === pagination.length ? next : next + 1)}
+            >&raquo;</div>
+          </li>
+        </ul>
+      </nav>
+      {/** pagination/ */}
 
-      <div style={pathname === path.pokemonSearch ? { display: 'block' } : { display: 'none' }}>
-        {/** pokemon card */}
-        <h5 style={{ marginBottom: 12 }}>Search result</h5>
-        <div css={pokemonCardContainerWrapper}>
-          {searchResult?.map((e) => {
-            return <PokemonCard key={e.id} props={e} />
-          })}
-        </div>
-        {/** pokemon card/ */}
-      </div>
     </div >
   );
 };

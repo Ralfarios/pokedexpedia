@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router-dom';
-import watermark from '../../../assets/images/img_pokeballWhite.svg';
+import watermark from '../../assets/images/img_pokeballWhite.svg';
 
 export const PokemonCard = ({ props }) => {
   const history = useHistory();
 
   const handleCol = _ => {
-    if (!props) return 'color: #fff; background-color: #00d2d3;';
+    if (props?.types === undefined) return 'color: #fff; background-color: #00d2d3;';
     switch (props?.types[0]?.type?.name) {
       case 'normal':
         return 'color: #fff; background-color: #00d2d3;';

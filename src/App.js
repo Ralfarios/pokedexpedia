@@ -7,7 +7,9 @@ import {
   PokemonList,
   PokemonDetail,
   MyPokemonList,
-  NotFound
+  NotFound,
+  PokemonSearch,
+  PokemonType
 } from './pages/index';
 
 export const App = _ => {
@@ -17,11 +19,14 @@ export const App = _ => {
       <Bottombar />
 
       <Switch>
+        <Route exact path={path.pokemonType}>
+          <PokemonType />
+        </Route>
         <Route exact path={path.pokemonList}>
           <PokemonList />
         </Route>
         <Route exact path={path.pokemonSearch}>
-          <PokemonList />
+          <PokemonSearch />
         </Route>
         <Route exact path={path.pokemonDetail}>
           <PokemonDetail />
@@ -36,6 +41,6 @@ export const App = _ => {
           <Redirect to={{ pathname: path.notFound }} />
         </Route>
       </Switch>
-    </div>
+    </div >
   );
 }
