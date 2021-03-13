@@ -1,6 +1,7 @@
 const init = {
   pokemons: [],
   type: [],
+  pagination: [],
   isLoading: true
 };
 
@@ -10,6 +11,8 @@ export const PokemonReducer = (state = init, action) => {
       return { ...state, pokemons: action.payload, isLoading: false };
     case 'FETCH_POKEMON_TYPE':
       return { ...state, type: action.payload, isLoading: false };
+    case 'PAGINATION_COUNT':
+      return {... state, pagination: action.payload, isLoading: false};
     case 'LOADING':
       return { ...state, isLoading: true };
     default:

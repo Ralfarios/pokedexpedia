@@ -9,13 +9,13 @@ import { useEffect, useState } from 'react';
 import { PokemonCard } from './components/PokemonCard';
 import { TypeCard } from './components/TypeCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
-import { fetchAllPokemon, fetchAllType } from '../../utils/store/actions/pokemonAction';
+import { fetchAllPokemon, fetchAllType, paginationCount } from '../../utils/store/actions/pokemonAction';
 
 export const PokemonList = _ => {
-  const { type, pokemons, errors, isLoading } = useSelector(state => state.pokemon);
+  const { type, pokemons, pagination, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
-  const [pokemonCount, setPokemonCount] = useState(0);
   const [curPage, setCurPage] = useState(1);
+  const [arrCurPage, setArrCurPage] = useState([]);
   // SET PAGINATION TO ELIPSIS
   // const { search } = useLocation(); // For Query Search
   // console.log(search); // For Query Search
@@ -23,12 +23,38 @@ export const PokemonList = _ => {
   useEffect(() => {
     dispatch(fetchAllPokemon());
     dispatch(fetchAllType());
+    dispatch(paginationCount());
 
-    fetch('https://pokeapi.co/api/v2/pokemon')
-      .then(response => response.json())
-      .then(({ count }) => setPokemonCount(Math.ceil(count / 12)))
+    let tempPagination = [...arrCurPage];
 
-  }, [dispatch]);
+    const dotInit = '...';
+    const dotLeft = '... ';
+    const dotRight = ' ...';
+
+    if (pagination.length < 6) {
+      tempPagination = pagination;
+    } else if (curPage >= 1 && curPage <= 3) {
+      tempPagination = [1, 2, 3, 4, dotInit, pagination.length]
+    } else if (curPage === 4) {
+      const sliced = pagination.slice(0, 5);
+      tempPagination = [...sliced, dotInit, pagination.length]
+    } else if (curPage > 4 && curPage < pagination.length - 2) {
+      const sliced1 = pagination.slice(curPage - 2, curPage);
+      const sliced2 = pagination.slice(curPage, curPage + 1);
+      tempPagination = ([1, dotLeft, ...sliced1, sliced2, dotRight.replace, pagination.length]);
+    } else if (curPage > pagination.length - 3) {
+      const sliced = pagination.slice(pagination.length - 4);
+      tempPagination = ([1, dotLeft, ...sliced]);
+    } else if (curPage === dotInit) {
+      setCurPage(arrCurPage[arrCurPage.length - 3] + 1);
+    } else if (curPage === dotRight) {
+      setCurPage(arrCurPage[3] + 2);
+    } else if (curPage === dotLeft) {
+      setCurPage(arrCurPage[3] - 2)
+    };
+
+    setArrCurPage(tempPagination);
+  }, [dispatch, curPage]);
 
 
 
@@ -117,6 +143,7 @@ export const PokemonList = _ => {
 
   if (isLoading) return <h1>NowLoading</h1>
   if (errors) return <h1>ERROR</h1>
+
   return (
     <div id="PokemonList" css={PokemonListPage}>
       <MetaDecorator title="Pokédex | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
@@ -154,16 +181,20 @@ export const PokemonList = _ => {
               onClick={() => setCurPage((prev) => prev === 0 ? prev : prev - 1)}
             >&laquo;</div>
           </li>
-          {Array(pokemonCount)?.fill(null)?.map((_, i) =>
-            <li key={i + 1} className={curPage === i ? 'page-item active' : 'page-item'}>
-              <a className="page-link" href="/">{i + 1}</a>
+          {arrCurPage?.map((e) =>
+            <li key={e} className={curPage === e ? 'page-item active' : 'page-item'}>
+              <div
+                className="page-link"
+                style={{ cursor: 'pointer' }}
+                onClick={() => setCurPage(e)}
+              >{e}</div>
             </li>
           )}
           <li className="page-item">
             <div
               className="page-link"
               style={{ cursor: 'pointer' }}
-              onClick={() => setCurPage((next) => next === pokemonCount-1 ? next : next + 1)}
+              onClick={() => setCurPage((next) => next === pagination.length ? next : next + 1)}
             >&raquo;</div>
           </li>
         </ul>

@@ -1,5 +1,26 @@
 const url = 'https://pokeapi.co/api/v2';
 
+export const paginationCount = _ => {
+  return async next => {
+    try {
+      next({ type: 'LOADING' });
+
+      let output = [];
+
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+      const { count } = await response.json();
+
+      for (let i = 1; i <= Math.ceil(count / 12); i++) {
+        output.push(i);
+      };
+
+      return next({ type: 'PAGINATION_COUNT', payload: output });
+    } catch (err) {
+      console.log(err);
+    };
+  };
+};
+
 export const fetchAllPokemon = _ => {
   return async next => {
     try {
