@@ -100,7 +100,7 @@ export const Navbar = _ => {
           ? { display: 'flex', }
           : { display: 'none' }}
         >
-          <img src={logo} style={{ width: 36 }} />
+          <img src={logo} style={{ width: 36 }} alt="logo"/>
           <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédex</h2>
         </div>
         <div

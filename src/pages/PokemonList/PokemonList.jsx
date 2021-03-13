@@ -12,51 +12,38 @@ import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import { fetchAllPokemon, fetchAllType, paginationCount } from '../../utils/store/actions/pokemonAction';
 
 export const PokemonList = _ => {
+  const itemsPerPage = 12;
   const { type, pokemons, pagination, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
   const [curPage, setCurPage] = useState(1);
-  const [arrCurPage, setArrCurPage] = useState([]);
+  const [arrPagination, setArrPagination] = useState([]);
   // SET PAGINATION TO ELIPSIS
   // const { search } = useLocation(); // For Query Search
   // console.log(search); // For Query Search
 
+  const pages = [];
+  for (let i = 1; i <= Math.ceil(pagination / itemsPerPage); i++) {
+    pages.push(i);
+  };
+
+  const handlePage = page => {
+    setCurPage(page);
+    // return dispatch(paginationCount((itemsPerPage * curPage) - itemsPerPage, itemsPerPage * curPage));
+  };
+
   useEffect(() => {
-    dispatch(fetchAllPokemon());
+    dispatch(fetchAllPokemon((itemsPerPage * curPage) - itemsPerPage, itemsPerPage * curPage));
     dispatch(fetchAllType());
     dispatch(paginationCount());
 
-    let tempPagination = [...arrCurPage];
-
-    const dotInit = '...';
-    const dotLeft = '... ';
-    const dotRight = ' ...';
-
-    if (pagination.length < 6) {
-      tempPagination = pagination;
-    } else if (curPage >= 1 && curPage <= 3) {
-      tempPagination = [1, 2, 3, 4, dotInit, pagination.length]
-    } else if (curPage === 4) {
-      const sliced = pagination.slice(0, 5);
-      tempPagination = [...sliced, dotInit, pagination.length]
-    } else if (curPage > 4 && curPage < pagination.length - 2) {
-      const sliced1 = pagination.slice(curPage - 2, curPage);
-      const sliced2 = pagination.slice(curPage, curPage + 1);
-      tempPagination = ([1, dotLeft, ...sliced1, sliced2, dotRight.replace, pagination.length]);
-    } else if (curPage > pagination.length - 3) {
-      const sliced = pagination.slice(pagination.length - 4);
-      tempPagination = ([1, dotLeft, ...sliced]);
-    } else if (curPage === dotInit) {
-      setCurPage(arrCurPage[arrCurPage.length - 3] + 1);
-    } else if (curPage === dotRight) {
-      setCurPage(arrCurPage[3] + 2);
-    } else if (curPage === dotLeft) {
-      setCurPage(arrCurPage[3] - 2)
-    };
-
-    setArrCurPage(tempPagination);
+    if (curPage < 3) {
+      setArrPagination([1, 2, 3, '...', pages.length])
+    } else if (curPage > pages.length - 2) {
+      setArrPagination([1, '...', pages.length - 2, pages.length - 1, pages.length]);
+    } else {
+      setArrPagination([1, '...', curPage - 1, curPage, curPage + 1, '...', pages.length])
+    }
   }, [dispatch, curPage]);
-
-
 
   const PokemonListPage = css`
     @media only screen and (max-width: 575px) {
@@ -128,7 +115,7 @@ export const PokemonList = _ => {
     margin-bottom: 12px;
   `;
 
-  const pokemonCarcContainerWrapper = css`
+  const pokemonCardContainerWrapper = css`
     @media only screen and (min-width: 575px) {
       display: grid;
       gap: 1rem;
@@ -144,6 +131,8 @@ export const PokemonList = _ => {
   if (isLoading) return <h1>NowLoading</h1>
   if (errors) return <h1>ERROR</h1>
 
+  // console.log(pokemons)
+
   return (
     <div id="PokemonList" css={PokemonListPage}>
       <MetaDecorator title="Pokédex | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
@@ -155,7 +144,13 @@ export const PokemonList = _ => {
       {/** searchbar */}
       <div css={InputGroup} style={{ marginBottom: 12 }}>
         <span css={InputGroupText} id="SearchIcon"><CgSearch /></span>
-        <input type="text" css={FormControl} placeholder="Search Pokémon" aria-label="pokemon" aria-describedby="pokemon-search" />
+        <input
+          type="text"
+          css={FormControl}
+          placeholder="Search Pokémon"
+          aria-label="pokemon"
+          aria-describedby="pokemon-search"
+        />
       </div>
       {/** searchbar/ */}
 
@@ -166,8 +161,10 @@ export const PokemonList = _ => {
       {/** pokemon type card/ */}
 
       {/** pokemon card */}
-      <div css={pokemonCarcContainerWrapper}>
-        {pokemons?.map((e, i) => <PokemonCard key={i} props={e} />)}
+      <div css={pokemonCardContainerWrapper}>
+        {pokemons?.map((e) => {
+          return <PokemonCard key={e.id} props={e} />
+        })}
       </div>
       {/** pokemon card/ */}
 
@@ -181,13 +178,21 @@ export const PokemonList = _ => {
               onClick={() => setCurPage((prev) => prev === 0 ? prev : prev - 1)}
             >&laquo;</div>
           </li>
-          {arrCurPage?.map((e) =>
-            <li key={e} className={curPage === e ? 'page-item active' : 'page-item'}>
-              <div
+          {arrPagination?.map((e, i) =>
+            <li
+              key={i}
+              className={curPage === e
+                ? 'page-item active'
+                : (e === '...'
+                  ? 'page-item disabled'
+                  : 'page-item')}
+            >
+              <button
                 className="page-link"
                 style={{ cursor: 'pointer' }}
-                onClick={() => setCurPage(e)}
-              >{e}</div>
+                onClick={() => handlePage(e)}
+                disabled={e === '...' ? true : false}
+              >{e}</button>
             </li>
           )}
           <li className="page-item">

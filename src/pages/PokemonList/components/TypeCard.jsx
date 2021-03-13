@@ -79,7 +79,7 @@ export const TypeCard = ({ props }) => {
   return (
     <div id="TypeCard" css={TypeCardContainer} onClick={() => handleClick()}>
       <p style={{ userSelect: 'none', fontWeight: 600, margin: '24px 12px 24px 24px', fontSize: 20, alignSelf: 'center', textTransform: 'capitalize' }}>{props?.name}</p>
-      <img id="watermarkImage" src={watermark} style={{ pointerEvents: 'none', userSelect: 'none', alignSelf: 'center', height: 56, width: 56, float: 'right', marginRight: 12, opacity: 0.25 }} />
+      <img id="watermarkImage" src={watermark} alt="watermark" style={{ pointerEvents: 'none', userSelect: 'none', alignSelf: 'center', height: 56, width: 56, float: 'right', marginRight: 12, opacity: 0.25 }} />
     </div>
   );
 };
