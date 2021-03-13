@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { PokemonCard } from '../../components/layout/PokemonCard';
 import { SkelPokemonCard } from '../../components/helpers/SkelPokemonCard';
@@ -21,6 +21,7 @@ export const PokemonList = _ => {
   const { type, pokemons, pagination, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
   const history = useHistory();
+  const { listpage } = useParams();
   const [curPage, setCurPage] = useState(1);
   const [arrPagination, setArrPagination] = useState([]);
   const { pathname } = useLocation(); // For Query Search
@@ -35,23 +36,21 @@ export const PokemonList = _ => {
   };
 
   const handlePage = page => {
-    setCurPage(page);
+    history.push('/page/' + page)
   };
 
   useEffect(() => {
-    if (pathname === path.pokemonList) {
-      dispatch(fetchAllPokemon((itemsPerPage * curPage) - itemsPerPage, itemsPerPage));
-      dispatch(paginationCount());
+    dispatch(fetchAllPokemon((itemsPerPage * Number(listpage)) - itemsPerPage, itemsPerPage));
+    dispatch(paginationCount());
 
-      if (curPage < 3) {
-        setArrPagination([1, 2, 3, '...', pages.length])
-      } else if (curPage > pages.length - 2) {
-        setArrPagination([1, '...', pages.length - 2, pages.length - 1, pages.length]);
-      } else {
-        setArrPagination([1, '...', curPage - 1, curPage, curPage + 1, '...', pages.length])
-      };
+    if (Number(listpage) < 3) {
+      setArrPagination([1, 2, 3, '...', pages.length])
+    } else if (Number(listpage) > pages.length - 2) {
+      setArrPagination([1, '...', pages.length - 2, pages.length - 1, pages.length]);
+    } else {
+      setArrPagination([1, '...', Number(listpage) - 1, Number(listpage), Number(listpage) + 1, '...', pages.length])
     };
-  }, [dispatch, curPage]);
+  }, [dispatch, Number(listpage)]);
 
   useEffect(() => {
     dispatch(fetchAllType());
@@ -180,7 +179,7 @@ export const PokemonList = _ => {
       <div css={pokemonCardContainerWrapper}>
         {
           isLoading
-            ? new Array(12).fill().map((_, i) => <SkelPokemonCard key={i} />)
+            ? new Array(4).fill().map((_, i) => <SkelPokemonCard key={i} />)
             : pokemons?.map((e) => { return <PokemonCard key={e.id} props={e} /> })
         }
       </div>
@@ -194,13 +193,13 @@ export const PokemonList = _ => {
             <div
               className="page-link"
               style={{ cursor: 'pointer' }}
-              onClick={() => setCurPage((prev) => prev === 0 ? prev : prev - 1)}
+              onClick={() => handlePage((prev) => prev === 0 ? prev : prev - 1)}
             >&laquo;</div>
           </li>
           {arrPagination?.map((e, i) =>
             <li
               key={i}
-              className={curPage === e
+              className={Number(listpage) === e
                 ? 'page-item active'
                 : (e === '...'
                   ? 'page-item disabled'
@@ -218,7 +217,7 @@ export const PokemonList = _ => {
             <div
               className="page-link"
               style={{ cursor: 'pointer' }}
-              onClick={() => setCurPage((next) => next === pagination.length ? next : next + 1)}
+              onClick={() => handlePage((next) => next === pagination.length ? next : next + 1)}
             >&raquo;</div>
           </li>
         </ul>

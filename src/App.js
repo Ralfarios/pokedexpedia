@@ -23,7 +23,7 @@ export const App = _ => {
           <PokemonType />
         </Route>
         <Route exact path={path.pokemonList}>
-          <PokemonList />
+          <Redirect to={{ pathname: '/page/1' }} />
         </Route>
         <Route exact path={path.pokemonSearch}>
           <PokemonSearch />
@@ -36,6 +36,9 @@ export const App = _ => {
         </Route>
         <Route exact path={path.notFound}>
           <NotFound />
+        </Route>
+        <Route exact path={path.pokemonListPagination}>
+          <PokemonList />
         </Route>
         <Route path={path.placeholder}>
           <Redirect to={{ pathname: path.notFound }} />

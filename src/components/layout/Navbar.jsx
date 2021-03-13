@@ -67,6 +67,10 @@ export const Navbar = _ => {
   const history = useHistory();
   const { pathname } = useLocation();
   const [bgNavbar, setBgNavbar] = useState(NavBarContainerTransparent);
+  const headEP = pathname.split('/')[1]
+  // console.log(pathname.split('/')[1])
+
+
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -96,7 +100,7 @@ export const Navbar = _ => {
         : { display: 'block' }}
     >
       <div css={bgNavbar}>
-        <div style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound
+        <div style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound || headEP === 'page'
           ? { display: 'flex', }
           : { display: 'none' }}
         >
@@ -105,10 +109,10 @@ export const Navbar = _ => {
         </div>
         <div
           css={BackButtonContainer}
-          style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound
+          style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound || headEP === 'page'
             ? { display: 'none' }
             : { display: 'flex' }}
-          onClick={() => { history.push(path.pokemonList) }}
+          onClick={() => { history.goBack() }}
         >
           <CgArrowLeft size="30px" style={{ alignSelf: 'center', textAlign: 'center' }} />
         </div>
