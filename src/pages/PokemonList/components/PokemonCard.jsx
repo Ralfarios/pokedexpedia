@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router-dom';
+import watermark from '../../../assets/images/img_pokeballWhite.svg';
 
 export const PokemonCard = ({ props }) => {
   const history = useHistory();
@@ -93,7 +94,7 @@ export const PokemonCard = ({ props }) => {
           ))}
         </div>
         <div className="col-6" style={{ padding: 0 }}>
-          <img alt={props?.name} style={{ width: '100%', zIndex: 1500 }} src={props?.sprites?.other['official-artwork']?.front_default} />
+          <img alt={props?.name} style={{ width: '100%', zIndex: 1500 }} src={!props?.sprites?.other['official-artwork']?.front_default ? watermark : props?.sprites?.other['official-artwork']?.front_default} />
         </div>
       </div>
     </div>

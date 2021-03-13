@@ -48,8 +48,8 @@ export const fetchSearchPokemon = val => {
   return async next => {
     try {
       // console.log(val)
-      // next({ type: 'LOADING' });
-      next({ type: 'ERASE_DATA_POKEMONS' });
+      next({ type: 'LOADING' });
+      next({ type: 'RESET_SEARCH_RESULT' });
 
       if (val.length <= 3) return next({ type: 'GET_ALL_POKEMONS', payload: [] });
 
@@ -62,24 +62,20 @@ export const fetchSearchPokemon = val => {
         results.map(e => {
           return fetch(e.url)
             .then(response => response.json())
-            .then(pokedata => output.push(pokedata))
-            .catch(err => console.log(err));
+            .then(pokedata => {
+              if (pokedata.name.toLowerCase().includes(val.toLowerCase())) {
+                output.push(pokedata);
+              }
+            })
+            .catch(err => console.warn(err));
         })
       )
         .then(_ => {
-          let temp = []
-          for (let i = 0; i < output.length; i++) {
-            if (output[i].name.toLowerCase().includes(val.toLowerCase())) {
-              temp.push(output[i])
-            };
-          }
-
-          console.log(temp)
-          // return next({ type: 'GET_ALL_POKEMONS', payload: temp });
+          return next({ type: 'GET_SEARCH_RESULT', payload: output });
         });
     } catch (err) {
       console.log(err);
-    }
+    };
   };
 };
 

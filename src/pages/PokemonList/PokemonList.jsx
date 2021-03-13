@@ -21,18 +21,15 @@ import { path } from '../../routers/path';
 
 export const PokemonList = _ => {
   const itemsPerPage = 12;
-  const { type, pokemons, pagination, errors, isLoading } = useSelector(state => state.pokemon);
+  const { type, pokemons, searchResult, pagination, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
   const history = useHistory();
   const [curPage, setCurPage] = useState(1);
   const [arrPagination, setArrPagination] = useState([]);
   const [searchVal, setSearchVal] = useState('');
   const { pathname } = useLocation(); // For Query Search
-  // console.log(pathname); // For Query Search
 
   const updateSearch = _ => {
-    // API CALL SEARCH
-    // return dispatch(fetchSearchPokemon(searchVal));
     return fetchSearchPokemon(searchVal);
   };
 
@@ -152,12 +149,12 @@ export const PokemonList = _ => {
     @media only screen and (min-width: 575px) {
       display: grid;
       gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
     }
     @media only screen and (max-width: 575px) {
       display: grid;
       gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
     }
   `;
 
@@ -190,8 +187,8 @@ export const PokemonList = _ => {
       </div>
       {/** searchbar/ */}
 
+      {/** POKEMON LIST CONTENT */}
       <div style={pathname === path.pokemonSearch ? { display: 'none' } : { display: 'block' }}>
-
         {/** pokemon type card */}
         <h5 style={{ marginBottom: 0 }}>Type</h5>
         <div css={horizontalScrollContainer}>
@@ -246,7 +243,18 @@ export const PokemonList = _ => {
           </ul>
         </nav>
         {/** pagination/ */}
+      </div>
+      {/** POKEMON LIST CONTENT/ */}
 
+      <div style={pathname === path.pokemonSearch ? { display: 'block' } : { display: 'none' }}>
+        {/** pokemon card */}
+        <h5 style={{ marginBottom: 12 }}>Search result</h5>
+        <div css={pokemonCardContainerWrapper}>
+          {searchResult?.map((e) => {
+            return <PokemonCard key={e.id} props={e} />
+          })}
+        </div>
+        {/** pokemon card/ */}
       </div>
     </div >
   );
