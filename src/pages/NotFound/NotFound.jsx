@@ -26,7 +26,7 @@ export const NotFound = _ => {
 
   return (
     <div id="NotFound" css={css`display: flex; justify-content: center; height:100vh; margin-left: 16px; margin-right: 16px`}>
-      <MetaDecorator title="Pokédex | 404 Not Found" desc="If you see this page, that means the url is wrong." />
+      <MetaDecorator title="Pokédexpedia | 404 Not Found" desc="If you see this page, that means the url is wrong." />
 
       <div css={css`align-self: center; text-align: center;`}>
         <img src={illustration} alt="snorlax404" css={illustrationStyle} />

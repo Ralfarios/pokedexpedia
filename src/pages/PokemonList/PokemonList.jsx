@@ -2,7 +2,8 @@
 import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 
 // import { useLocation } from 'react-router-dom' // For Query Search
 
@@ -17,9 +18,22 @@ export const PokemonList = _ => {
   const dispatch = useDispatch();
   const [curPage, setCurPage] = useState(1);
   const [arrPagination, setArrPagination] = useState([]);
+  const [searchVal, setSearchVal] = useState('');
   // SET PAGINATION TO ELIPSIS
   // const { search } = useLocation(); // For Query Search
   // console.log(search); // For Query Search
+
+  const updateSearch = _ => {
+    // API CALL SEARCH
+    // sendSearch(searchVal);
+    console.log(searchVal);
+  };
+
+  const delayedSearch = useCallback(debounce(updateSearch, 1000), [searchVal]);
+
+  const handleChangeSearch = e => {
+    setSearchVal(e.target.value);
+  };
 
   const pages = [];
   for (let i = 1; i <= Math.ceil(pagination / itemsPerPage); i++) {
@@ -28,12 +42,10 @@ export const PokemonList = _ => {
 
   const handlePage = page => {
     setCurPage(page);
-    // return dispatch(paginationCount((itemsPerPage * curPage) - itemsPerPage, itemsPerPage * curPage));
   };
 
   useEffect(() => {
     dispatch(fetchAllPokemon((itemsPerPage * curPage) - itemsPerPage, itemsPerPage * curPage));
-    dispatch(fetchAllType());
     dispatch(paginationCount());
 
     if (curPage < 3) {
@@ -42,8 +54,18 @@ export const PokemonList = _ => {
       setArrPagination([1, '...', pages.length - 2, pages.length - 1, pages.length]);
     } else {
       setArrPagination([1, '...', curPage - 1, curPage, curPage + 1, '...', pages.length])
-    }
+    };
   }, [dispatch, curPage]);
+
+  useEffect(() => {
+    dispatch(fetchAllType());
+  }, [dispatch])
+
+  useEffect(() => {
+    delayedSearch();
+
+    return delayedSearch.cancel;
+  }, [searchVal, delayedSearch])
 
   const PokemonListPage = css`
     @media only screen and (max-width: 575px) {
@@ -131,11 +153,11 @@ export const PokemonList = _ => {
   if (isLoading) return <h1>NowLoading</h1>
   if (errors) return <h1>ERROR</h1>
 
-  // console.log(pokemons)
+  // console.log(type)
 
   return (
     <div id="PokemonList" css={PokemonListPage}>
-      <MetaDecorator title="Pokédex | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
+      <MetaDecorator title="Pokédexpedia | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
 
       {/** title */}
       <h2 style={{ marginTop: 0, marginBottom: 18, userSelect: 'none' }}>Looking for Pokémon?</h2>
@@ -150,17 +172,22 @@ export const PokemonList = _ => {
           placeholder="Search Pokémon"
           aria-label="pokemon"
           aria-describedby="pokemon-search"
+          onChange={handleChangeSearch}
+          value={searchVal}
         />
       </div>
       {/** searchbar/ */}
 
       {/** pokemon type card */}
+      <h5 style={{ marginBottom: 0 }}>Type</h5>
       <div css={horizontalScrollContainer}>
+        <TypeCard props={{ name: 'all', url: '/' }} />
         {type?.map((e, i) => <TypeCard key={i} props={e} />)}
       </div>
       {/** pokemon type card/ */}
 
       {/** pokemon card */}
+      <h5 style={{ marginBottom: 12 }}>Pokédex</h5>
       <div css={pokemonCardContainerWrapper}>
         {pokemons?.map((e) => {
           return <PokemonCard key={e.id} props={e} />
@@ -168,8 +195,8 @@ export const PokemonList = _ => {
       </div>
       {/** pokemon card/ */}
 
-
-      <nav aria-label="Page navigation example">
+      {/** pagination */}
+      <nav aria-label="pagination-pokelist">
         <ul className="pagination justify-content-center" style={{ marginTop: 16, marginBottom: 16 }}>
           <li className="page-item">
             <div
@@ -204,6 +231,7 @@ export const PokemonList = _ => {
           </li>
         </ul>
       </nav>
+      {/** pagination/ */}
 
     </div >
   );

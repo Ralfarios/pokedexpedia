@@ -76,6 +76,8 @@ export const TypeCard = ({ props }) => {
     return console.log('clicked');
   };
 
+  // console.log(props);
+
   return (
     <div id="TypeCard" css={TypeCardContainer} onClick={() => handleClick()}>
       <p style={{ userSelect: 'none', fontWeight: 600, margin: '24px 12px 24px 24px', fontSize: 20, alignSelf: 'center', textTransform: 'capitalize' }}>{props?.name}</p>

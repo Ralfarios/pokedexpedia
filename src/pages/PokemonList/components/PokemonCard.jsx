@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useHistory } from 'react-router-dom';
 
 export const PokemonCard = ({ props }) => {
+  const history = useHistory();
+
   const handleCol = _ => {
+    if (!props) return 'color: #fff; background-color: #00d2d3;';
     switch (props?.types[0]?.type?.name) {
       case 'normal':
         return 'color: #fff; background-color: #00d2d3;';
@@ -71,14 +75,14 @@ export const PokemonCard = ({ props }) => {
     }
   `;
 
-  // const handleClick = _ => {
-  //   return console.log('clicked');
-  // };
+  const handleClick = id => {
+    return history.push('/pokemon/' + id);
+  };
 
-  // console.log(props, '<<< PROPS')
+  // console.log(props, '<<< PROPS');
 
   return (
-    <div id="PokemonCard" css={PokemonCardContainer}>
+    <div id="PokemonCard" css={PokemonCardContainer} onClick={_ => handleClick(props?.id)}>
       <h3 style={{ margin: 12, marginBottom: 4, textOverflow: 'ellipsis', overflow: 'hidden', textTransform: 'capitalize' }}>{props?.name}</h3>
       <div className="row" style={{ marginLeft: 12, marginRight: 12, paddingBottom: 12 }}>
         <div className="col-6" style={{ padding: 0, alignSelf: 'center' }}>
