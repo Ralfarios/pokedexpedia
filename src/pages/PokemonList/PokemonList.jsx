@@ -15,7 +15,8 @@ import {
   fetchAllPokemon,
   fetchAllType,
   fetchSearchPokemon,
-  paginationCount
+  paginationCount,
+  resetSearch
 } from '../../utils/store/actions/pokemonAction';
 import { path } from '../../routers/path';
 
@@ -37,6 +38,14 @@ export const PokemonList = _ => {
 
   const handleChangeSearch = e => {
     setSearchVal(e.target.value);
+  };
+
+  const handleSearchPage = _ => {
+    if (pathname === path.pokemonList) {
+      dispatch(resetSearch());
+      setSearchVal('');
+      return history.push(path.pokemonSearch);
+    };
   };
 
   const pages = [];
@@ -180,7 +189,7 @@ export const PokemonList = _ => {
           placeholder="Search Pokémon"
           aria-label="pokemon"
           aria-describedby="pokemon-search"
-          onClick={_ => history.push(path.pokemonSearch)}
+          onClick={_ => handleSearchPage()}
           onChange={handleChangeSearch}
           value={searchVal}
         />

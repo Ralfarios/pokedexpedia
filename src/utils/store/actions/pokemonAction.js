@@ -60,14 +60,12 @@ export const fetchSearchPokemon = val => {
 
       Promise.all(
         results.map(e => {
-          return fetch(e.url)
-            .then(response => response.json())
-            .then(pokedata => {
-              if (pokedata.name.toLowerCase().includes(val.toLowerCase())) {
-                output.push(pokedata);
-              }
-            })
-            .catch(err => console.warn(err));
+          if (e.name.toLowerCase().includes(val.toLowerCase())) {
+            return fetch(e.url)
+              .then(response => response.json())
+              .then(pokedata => output.push(pokedata))
+              .catch(err => console.warn(err));
+          };
         })
       )
         .then(_ => {
@@ -89,6 +87,16 @@ export const fetchAllType = _ => {
       const { results } = await response.json();
 
       return await next({ type: 'FETCH_POKEMON_TYPE', payload: results });
+    } catch (err) {
+      console.log(err);
+    };
+  };
+};
+
+export const resetSearch = _ => {
+  return async next => {
+    try {
+      return next({ type: 'RESET_SEARCH_RESULT' });
     } catch (err) {
       console.log(err);
     };
