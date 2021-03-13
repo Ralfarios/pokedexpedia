@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 
 import { PokemonCard } from '../../components/layout/PokemonCard';
+import { SearchIllust } from '../../components/helpers/SearchIllust';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import { fetchSearchPokemon, resetSearch } from '../../utils/store/actions/pokemonAction';
 
@@ -37,12 +38,14 @@ export const PokemonSearch = _ => {
       padding-right: 24px;
       padding-top: 12px;
       padding-bottom: 72px;
+      height: calc(100vh - 72px);
     }
     @media only screen and (min-width: 575px) {
       padding-left: 24px;
       padding-right: 24px;
       padding-top: 12px;
       padding-bottom: 12px;
+      height: calc(100vh - 72px);
     }
   `;
 
@@ -136,8 +139,8 @@ export const PokemonSearch = _ => {
       {/** searchbar/ */}
 
       {/** search result card */}
-      {searchResult[0] === 'notFound' ? <h1> not found </h1> :
-        searchResult[0] === 'insertKeyword' ? <h1>Insert Keyword</h1> :
+      {searchResult[0] === 'notFound' ? <SearchIllust props='notFound' /> :
+        searchResult[0] === 'insertKeyword' ? <SearchIllust props='insertKeyword' /> :
           isLoading ? <h1>NowLoading</h1> :
             <>
               <h5 style={{ marginBottom: 12 }}>Search result</h5>

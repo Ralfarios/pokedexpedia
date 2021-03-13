@@ -60,7 +60,6 @@ export const PokemonCard = ({ props }) => {
     width: 100%;
     height: auto;
     border-radius: 1.25rem;
-    display: flex;
     cursor: pointer;
     transition: 300ms;
     box-shadow: 0 .08rem .16rem rgba(0,0,0,.15);

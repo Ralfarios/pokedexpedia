@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { PokemonCard } from '../../components/layout/PokemonCard';
+import { SkelPokemonCard } from '../../components/helpers/SkelPokemonCard';
 import { TypeCard } from '../../components/layout/TypeCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import { fetchAllType, fetchTypePokemon } from '../../utils/store/actions/pokemonAction';
@@ -12,7 +13,7 @@ import { fetchAllType, fetchTypePokemon } from '../../utils/store/actions/pokemo
 export const PokemonType = _ => {
   const { pokemontype } = useParams();
   const dispatch = useDispatch();
-  const { type, errors, isLoading } = useSelector(state => state.pokemon);
+  const { type, pokemonsType, errors, isLoading } = useSelector(state => state.pokemon);
 
   useEffect(() => {
     dispatch(fetchAllType());
@@ -42,6 +43,19 @@ export const PokemonType = _ => {
     margin-bottom: 12px;
   `;
 
+  const pokemonCardContainerWrapper = css`
+    @media only screen and (min-width: 575px) {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    }
+    @media only screen and (max-width: 575px) {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    }
+  `;
+
   const helmetString = 'Pokédexpedia | ' + pokemontype.charAt(0).toUpperCase() + pokemontype.slice(1);
 
   if (errors) return <h1>Error occured</h1>
@@ -62,6 +76,18 @@ export const PokemonType = _ => {
         {type?.map((e, i) => <TypeCard key={i} props={e} />)}
       </div>
       {/** pokemon type card/ */}
+
+      {/** pokemon card */}
+      <h5 style={{ marginBottom: 12 }}>Pokédex</h5>
+      <div css={pokemonCardContainerWrapper}>
+        {
+          isLoading
+            ? new Array(12).fill().map((_, i) => <SkelPokemonCard key={i} />)
+            : pokemonsType?.map((e) => { return <PokemonCard key={e.id} props={e} /> })
+        }
+      </div>
+
+      {/** pokemon card/ */}
     </div>
   );
 };

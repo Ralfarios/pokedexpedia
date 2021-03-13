@@ -20,7 +20,7 @@ export const fetchAllPokemon = (offset, limit) => {
   return async next => {
     try {
       next({ type: 'LOADING' });
-      next({ type: 'ERASE_DATA_POKEMONS' });
+      next({ type: 'RESET_ALL_POKEMONS' });
 
       let output = [];
 
@@ -30,8 +30,13 @@ export const fetchAllPokemon = (offset, limit) => {
       Promise.all(
         results.map(async e => {
           return fetch(e.url)
-            .then(response => response.json())
-            .then(pokedata => output.push(pokedata))
+            .then(response => {
+              return response.json()
+            })
+            .then(pokedata => {
+              next({ type: 'LOADING' });
+              return output.push(pokedata)
+            })
             .catch(err => console.log(err));
         })
 
@@ -48,8 +53,11 @@ export const fetchAllPokemon = (offset, limit) => {
 export const fetchTypePokemon = type => {
   return async next => {
     try {
-      // next({ type: 'LOADING' });
+      next({ type: 'LOADING' });
+      next({ type: 'RESET_POKEMONS_BY_TYPE' });
 
+      let temp = [];
+      let temp1 = [];
       let output = [];
 
       const response = await fetch(url + `/type`);
@@ -59,21 +67,33 @@ export const fetchTypePokemon = type => {
         results.map(e => {
           if (e.name === type) {
             return fetch(e.url)
-              .then(response => response.json())
-              .then(typePoke => typePoke.pokemon.map(e => {
-                fetch(e.pokemon.url)
-                  .then(res => res.json())
-                  .then(detailTypePoke => console.log(detailTypePoke))
-                  .catch(err => console.log(err))
-              }))
+              .then(response => {
+                next({ type: 'LOADING' }); return response.json()
+              })
+              .then(typePoke => temp.push(typePoke))
               .catch(err => console.log(err))
           }
           return null;
         })
       )
-
-      // await console.log(results, '<<<<<');
-
+        .then(_ => Promise.all(
+          temp.map(e => {
+            e.pokemon.map(el => {
+              temp1.push(el.pokemon.url);
+            })
+          })
+        ))
+        .then(_ => Promise.all(
+          temp1.map(e => {
+            return fetch(e)
+              .then(response => response.json())
+              .then(data => output.push(data))
+              .catch(err => console.log(err));
+          })
+        ))
+        .then(_ => {
+          return next({ type: 'GET_POKEMONS_BY_TYPE', payload: output });
+        });
     } catch (err) {
       console.log(err);
     };
@@ -106,7 +126,7 @@ export const fetchSearchPokemon = val => {
         })
       )
         .then(_ => {
-          if (output.length === 0) output.push('notFound')
+          if (output.length === 0) output.push('notFound');
           return next({ type: 'GET_SEARCH_RESULT', payload: output });
         });
     } catch (err) {
@@ -124,7 +144,7 @@ export const fetchAllType = _ => {
 
       const { results } = await response.json();
 
-      return await next({ type: 'FETCH_POKEMON_TYPE', payload: results });
+      return await next({ type: 'GET_POKEMON_TYPE', payload: results });
     } catch (err) {
       console.log(err);
     };

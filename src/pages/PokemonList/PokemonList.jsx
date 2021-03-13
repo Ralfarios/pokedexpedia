@@ -3,9 +3,10 @@ import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useHistory,useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { PokemonCard } from '../../components/layout/PokemonCard';
+import { SkelPokemonCard } from '../../components/helpers/SkelPokemonCard';
 import { TypeCard } from '../../components/layout/TypeCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import {
@@ -139,7 +140,6 @@ export const PokemonList = _ => {
     }
   `;
 
-  if (isLoading) return <h1>NowLoading</h1>
   if (errors) return <h1>ERROR</h1>
 
   // console.log(type)
@@ -178,10 +178,13 @@ export const PokemonList = _ => {
       {/** pokemon card */}
       <h5 style={{ marginBottom: 12 }}>Pokédex</h5>
       <div css={pokemonCardContainerWrapper}>
-        {pokemons?.map((e) => {
-          return <PokemonCard key={e.id} props={e} />
-        })}
+        {
+          isLoading
+            ? new Array(12).fill().map((_, i) => <SkelPokemonCard key={i} />)
+            : pokemons?.map((e) => { return <PokemonCard key={e.id} props={e} /> })
+        }
       </div>
+
       {/** pokemon card/ */}
 
       {/** pagination */}

@@ -100,7 +100,7 @@ export const Navbar = _ => {
           ? { display: 'flex', }
           : { display: 'none' }}
         >
-          <img src={logo} style={{ width: 36 }} alt="logo"/>
+          <img src={logo} style={{ width: 36 }} alt="logo" />
           <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédexpedia</h2>
         </div>
         <div
@@ -108,7 +108,7 @@ export const Navbar = _ => {
           style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound
             ? { display: 'none' }
             : { display: 'flex' }}
-          onClick={() => { history.goBack() }}
+          onClick={() => { history.push(path.pokemonList) }}
         >
           <CgArrowLeft size="30px" style={{ alignSelf: 'center', textAlign: 'center' }} />
         </div>
