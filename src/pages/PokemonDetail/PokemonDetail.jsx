@@ -22,7 +22,7 @@ export const PokemonDetail = _ => {
   }, [dispatch, pokemonid]);
 
   const handleCol = _ => {
-    if (pokemon?.types === undefined) return 'color: #fff; background-color: #00d2d3;';
+    if (pokemon?.types === undefined) return 'background-color: #00d2d3;';
     switch (pokemon?.types[0]?.type?.name) {
       case 'normal':
         return 'background-color: #00d2d3;';
