@@ -134,9 +134,21 @@ export const PokemonDetail = _ => {
             <CgHeart size="1.8em" style={{ alignSelf: 'center' }} />
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
           <h1 style={{ textTransform: 'capitalize', margin: 0, alignSelf: 'center' }}>{pokemon?.name}</h1>
           <h5 style={{ fontWeight: 400, margin: 0, alignSelf: 'center' }}>#{pokemon?.id}</h5>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+          <div style={{ display: 'flex' }}>
+            {pokemon?.types?.map((e, i) => (
+              <div key={i} style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>
+                <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>{e.type.name}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ margin: 4, backgroundColor: '#ffffffbf', color: 'black', borderRadius: 8, textAlign: 'center' }}>
+            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: 0</p>
+          </div>
         </div>
       </div>
 
