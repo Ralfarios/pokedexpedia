@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
+import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
-import { debounce } from 'lodash';
 
-import { PokemonCard } from '../../components/layout/PokemonCard';
 import { SearchIllust } from '../../components/helpers/SearchIllust';
+import { PokemonCard } from '../../components/layout/PokemonCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import { fetchSearchPokemon, resetSearch } from '../../utils/store/actions/pokemonAction';
 
@@ -115,9 +115,11 @@ export const PokemonSearch = _ => {
 
   // console.log(type)
 
+  const metaTitle = `Pokédexpedia | ${!searchVal ? 'Search' : searchVal}`
+
   return (
     <div id="PokemonList" css={PokemonListPage}>
-      <MetaDecorator title="Pokédexpedia | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
+      <MetaDecorator title={metaTitle} desc="This is Pokemon List page, you can see all Pokemons in here" />
 
       {/** title */}
       <h2 style={{ marginTop: 0, marginBottom: 18, userSelect: 'none' }}>Looking for Pokémon?</h2>
