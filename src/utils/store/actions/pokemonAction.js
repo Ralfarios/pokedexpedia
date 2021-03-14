@@ -5,11 +5,26 @@ export const paginationCount = _ => {
     try {
       next({ type: 'LOADING' });
 
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+      const response = await fetch(url + '/pokemon');
       const { count } = await response.json();
 
       return next({ type: 'PAGINATION_COUNT', payload: count });
 
+    } catch (err) {
+      console.log(err);
+    };
+  };
+};
+
+export const fetchPokemonById = id => {
+  return async next => {
+    try {
+      next({ type: 'LOADING' });
+      next({ type: 'RESET_POKEMON_DETAIL' });
+
+      const response = await (await fetch(`${url}/pokemon/${id}`)).json();
+
+      return next({ type: 'GET_POKEMON_DETAIL', payload: response });
     } catch (err) {
       console.log(err);
     };
@@ -99,7 +114,6 @@ export const fetchTypePokemon = type => {
 export const fetchSearchPokemon = val => {
   return async next => {
     try {
-      // console.log(val)
       next({ type: 'LOADING' });
       next({ type: 'RESET_SEARCH_RESULT' });
 

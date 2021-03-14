@@ -102,11 +102,13 @@ export const PokemonSearch = _ => {
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+      padding-bottom: 24px;
     }
     @media only screen and (max-width: 575px) {
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+      padding-bottom: 90px;
     }
   `;
 

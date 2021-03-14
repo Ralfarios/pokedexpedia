@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router-dom';
-import watermark from '../../assets/images/img_pokeballWhite.svg';
 
 export const PokemonCard = ({ props }) => {
   const history = useHistory();
@@ -79,13 +78,14 @@ export const PokemonCard = ({ props }) => {
     return history.push('/pokemon/' + id);
   };
 
-  // console.log(props, '<<< PROPS');
-
   return (
     <div id="PokemonCard" css={PokemonCardContainer} onClick={_ => handleClick(props?.id)}>
       <h3 style={{ margin: 12, marginBottom: 4, textOverflow: 'ellipsis', overflow: 'hidden', textTransform: 'capitalize' }}>{props?.name}</h3>
       <div className="row" style={{ marginLeft: 12, marginRight: 12, paddingBottom: 12 }}>
         <div className="col-6" style={{ padding: 0, alignSelf: 'center' }}>
+          <div style={{ margin: 4, backgroundColor: '#ffffffbf', color: 'black', borderRadius: 8, textAlign: 'center' }}>
+            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: 0</p>
+          </div>
           {props?.types?.map((e, i) => (
             <div key={i} style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>
               <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>{e.type.name}</p>
@@ -93,7 +93,13 @@ export const PokemonCard = ({ props }) => {
           ))}
         </div>
         <div className="col-6" style={{ padding: 0 }}>
-          <img alt={props?.name} style={{ width: '100%', zIndex: 1500 }} src={!props?.sprites?.other['official-artwork']?.front_default ? watermark : props?.sprites?.other['official-artwork']?.front_default} />
+          <img
+            alt={props?.name}
+            style={{ width: '100%', zIndex: 1500 }}
+            src={!props?.sprites?.other['official-artwork']?.front_default
+              ? props?.sprites?.front_default
+              : props?.sprites?.other['official-artwork']?.front_default}
+          />
         </div>
       </div>
     </div>
