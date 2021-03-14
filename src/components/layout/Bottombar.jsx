@@ -80,7 +80,7 @@ export const Bottombar = _ => {
     <div
       id="Bottombar"
       css={BottomBar}
-      style={pathname === path.notFound
+      style={pathname === path.notFound || headEP === 'pokemon'
         ? { display: 'none' }
         : { display: 'flex', justifyContent: 'center' }}
     >

@@ -93,7 +93,7 @@ export const Navbar = _ => {
     <div
       id="Navbar"
       css={NavBar}
-      style={pathname === path.notFound
+      style={pathname === path.notFound || headEP === 'pokemon'
         ? { display: 'none' }
         : { display: 'block' }}
     >
