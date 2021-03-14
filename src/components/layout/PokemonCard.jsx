@@ -75,7 +75,7 @@ export const PokemonCard = ({ props }) => {
   `;
 
   const handleClick = id => {
-    return history.push('/pokemon/' + id);
+    return history.push(`/pokemon/${id}/info`);
   };
 
   return (

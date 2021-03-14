@@ -33,6 +33,9 @@ export const App = _ => {
           <Route exact path={path.pokemonDetail}>
             <PokemonDetail />
           </Route>
+          <Route exact path={path.pokemonMove}>
+            <PokemonDetail />
+          </Route>
           <Route exact path={path.myPokemonList}>
             <MyPokemonList />
           </Route>

@@ -3,7 +3,8 @@ export const path = {
   pokemonListPagination: '/page/:listpage',
   pokemonType: '/type/:pokemontype',
   pokemonSearch: '/search',
-  pokemonDetail: '/pokemon/:pokemonid',
+  pokemonDetail: '/pokemon/:pokemonid/info',
+  pokemonMove: '/pokemon/:pokemonid/move',
   myPokemonList: '/mypokemon',
   notFound: '/404',
   placeholder: '*'

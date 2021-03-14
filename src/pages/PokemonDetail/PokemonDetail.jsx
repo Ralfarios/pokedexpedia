@@ -2,17 +2,16 @@
 import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
-import { CgPokemon, CgHeart } from 'react-icons/cg';
+import { useParams } from 'react-router-dom';
 
 import { fetchPokemonById } from '../../utils/store/actions/pokemonAction';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
-import { Button } from '../../components/helpers/Button';
-import { path } from '../../routers/path';
+import { PokemonDetailHeader } from './components/PokemonDetailHeader';
+import { PokemonDetailImage } from './components/PokemonDetailImage';
+import { PokemonDetailSpec } from './components/PokemonDetailSpec';
 
 export const PokemonDetail = _ => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { pokemonid } = useParams();
   const { pokemon, errors, isLoading } = useSelector(state => state.pokemon);
   let metaTitle;
@@ -70,26 +69,6 @@ export const PokemonDetail = _ => {
     };
   };
 
-  const NavButtonContainer = css`
-    -webkit-tap-highlight-color: transparent;
-    height: 42px;
-    width: 42px;
-    border-radius: 1.5rem;
-    justify-content: center;
-    display: flex;
-    background-color: transparent;
-    cursor: pointer;
-    transition: 300ms;
-    &:hover {
-      background-color: #e0e0e06a;
-    }
-    &:active {
-      background-color: #cecece6a;
-      transition: 300ms;
-    }
-  `;
-
-
   const PokemonDetailPage = css`
     @media only screen and (max-width: 575px) {
       display: 'flex';
@@ -119,50 +98,15 @@ export const PokemonDetail = _ => {
 
   metaTitle = `Pokédexpedia | ${pokemon?.name}`;
 
-  console.log(pokemon);
-
   return (
     <div id="PokemonDetail" css={PokemonDetailPage}>
       <MetaDecorator title={metaTitle} desc="This is Pokemon Detail page, you can see the detail about a pokemon in here." />
 
-      <div style={{ padding: 24, color: 'white' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
-          <div css={NavButtonContainer} onClick={() => history.push(path.pokemonList)}>
-            <CgPokemon size="2em" style={{ alignSelf: 'center' }} />
-          </div>
-          <div css={NavButtonContainer} onClick={() => history.push(path.myPokemonList)}>
-            <CgHeart size="1.8em" style={{ alignSelf: 'center' }} />
-          </div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-          <h1 style={{ textTransform: 'capitalize', margin: 0, alignSelf: 'center' }}>{pokemon?.name}</h1>
-          <h5 style={{ fontWeight: 400, margin: 0, alignSelf: 'center' }}>#{pokemon?.id}</h5>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-          <div style={{ display: 'flex' }}>
-            {pokemon?.types?.map((e, i) => (
-              <div key={i} style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>
-                <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>{e.type.name}</p>
-              </div>
-            ))}
-          </div>
-          <div style={{ margin: 4, backgroundColor: '#ffffffbf', color: 'black', borderRadius: 8, textAlign: 'center' }}>
-            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: 0</p>
-          </div>
-        </div>
-      </div>
+      <PokemonDetailHeader props={pokemon} />
 
-      <img
-        alt={pokemon?.name}
-        style={{ position: 'fixed', left: '50%', top: '43%', transform: 'translate(-50%, -55%)', zIndex: 1500, height: '35%' }}
-        src={!pokemon?.sprites?.other['official-artwork']?.front_default
-          ? pokemon?.sprites?.front_default
-          : pokemon?.sprites?.other['official-artwork']?.front_default}
-      />
+      <PokemonDetailImage props={pokemon} />
 
-      <div style={{ backgroundColor: 'white', position: 'fixed', left: 0, bottom: 0, width: '100vw', height: '50vh', borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem', padding: '60px 24px 12px 24px', boxShadow: ' 0 .1rem 1rem rgba(0,0,0,.25)' }}>
-        <h1>1</h1>
-      </div>
+      <PokemonDetailSpec props={pokemon} />
 
       <div style={{ position: 'fixed', left: 0, bottom: 0, width: '100vw', padding: '0 24px 24px 24px' }}>
         <button className="btn btn-primary w-100" style={{ borderRadius: '0.9rem' }}>Catch this!</button>
