@@ -142,9 +142,9 @@ export const PokemonSearch = _ => {
       {/** searchbar/ */}
 
       {/** search result card */}
-      {searchResult[0] === 'notFound' ? <SearchIllust props='notFound' /> :
-        searchResult[0] === 'insertKeyword' ? <SearchIllust props='insertKeyword' /> :
-          isLoading ? <h1>NowLoading</h1> :
+      {isLoading ? <h1>NowLoading</h1> :
+        searchResult[0] === 'notFound' ? <SearchIllust props='notFound' /> :
+          searchResult[0] === 'insertKeyword' ? <SearchIllust props='insertKeyword' /> :
             <>
               <h5 style={{ marginBottom: 12 }}>Search result</h5>
               <div css={pokemonCardContainerWrapper}>

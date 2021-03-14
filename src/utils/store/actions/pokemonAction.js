@@ -124,7 +124,8 @@ export const fetchSearchPokemon = val => {
         .then(_ => {
           if (output.length === 0) output.push('notFound');
           return next({ type: 'GET_SEARCH_RESULT', payload: output });
-        });
+        })
+        .catch(err => console.log(err));
     } catch (err) {
       console.log(err);
     };
