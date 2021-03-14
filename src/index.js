@@ -1,14 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { BrowserRouter } from 'react-router-dom';
 import { Global, css } from '@emotion/react';
-import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import { store, persistor } from './utils/store/index';
+import { store } from './utils/store/index';
 
 import 'bootstrap';
 import '@popperjs/core';
@@ -38,11 +37,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Global styles={Body} />
-          <Global styles={CodeStyle} />
-          <App />
-        </PersistGate>
+        <Global styles={Body} />
+        <Global styles={CodeStyle} />
+        <App />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

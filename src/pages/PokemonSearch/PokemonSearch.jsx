@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
+import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
-import { debounce } from 'lodash';
 
-import { PokemonCard } from '../../components/layout/PokemonCard';
 import { SearchIllust } from '../../components/helpers/SearchIllust';
+import { PokemonCard } from '../../components/layout/PokemonCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import { fetchSearchPokemon, resetSearch } from '../../utils/store/actions/pokemonAction';
 
@@ -19,6 +19,7 @@ export const PokemonSearch = _ => {
     return fetchSearchPokemon(searchVal);
   };
 
+  // eslint-disable-next-line
   const delayedSearch = useCallback(debounce(updateSearch(), 1000), [searchVal]);
 
   const handleChangeSearch = e => {
@@ -30,7 +31,7 @@ export const PokemonSearch = _ => {
     dispatch(delayedSearch);
 
     return delayedSearch.cancel;
-  }, [searchVal, delayedSearch]);
+  }, [searchVal, dispatch, delayedSearch]);
 
   const PokemonListPage = css`
     @media only screen and (max-width: 575px) {
@@ -101,11 +102,13 @@ export const PokemonSearch = _ => {
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+      padding-bottom: 24px;
     }
     @media only screen and (max-width: 575px) {
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+      padding-bottom: 90px;
     }
   `;
 
@@ -114,9 +117,11 @@ export const PokemonSearch = _ => {
 
   // console.log(type)
 
+  const metaTitle = `Pokédexpedia | ${!searchVal ? 'Search' : searchVal}`
+
   return (
     <div id="PokemonList" css={PokemonListPage}>
-      <MetaDecorator title="Pokédexpedia | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
+      <MetaDecorator title={metaTitle} desc="This is Pokemon List page, you can see all Pokemons in here" />
 
       {/** title */}
       <h2 style={{ marginTop: 0, marginBottom: 18, userSelect: 'none' }}>Looking for Pokémon?</h2>
@@ -139,9 +144,9 @@ export const PokemonSearch = _ => {
       {/** searchbar/ */}
 
       {/** search result card */}
-      {searchResult[0] === 'notFound' ? <SearchIllust props='notFound' /> :
-        searchResult[0] === 'insertKeyword' ? <SearchIllust props='insertKeyword' /> :
-          isLoading ? <h1>NowLoading</h1> :
+      {isLoading ? <h1>NowLoading</h1> :
+        searchResult[0] === 'notFound' ? <SearchIllust props='notFound' /> :
+          searchResult[0] === 'insertKeyword' ? <SearchIllust props='insertKeyword' /> :
             <>
               <h5 style={{ marginBottom: 12 }}>Search result</h5>
               <div css={pokemonCardContainerWrapper}>

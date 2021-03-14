@@ -5,6 +5,9 @@ import { path } from '../../routers/path';
 import { CgPokemon, CgHeart } from 'react-icons/cg';
 
 export const Bottombar = _ => {
+  const { pathname } = useLocation();
+  const headEP = pathname.split('/')[1]
+
   const BottomBar = css`
     @media only screen and (min-width: 575px) {
       display: none;
@@ -73,13 +76,11 @@ export const Bottombar = _ => {
     color: #222222;
   `;
 
-  const { pathname } = useLocation();
-
   return (
     <div
       id="Bottombar"
       css={BottomBar}
-      style={pathname === path.notFound
+      style={pathname === path.notFound || headEP === 'pokemon'
         ? { display: 'none' }
         : { display: 'flex', justifyContent: 'center' }}
     >
@@ -90,11 +91,11 @@ export const Bottombar = _ => {
           <Link
             to={path.pokemonList}
             style={{ textDecoration: 'none', color: '#fff' }}
-            css={pathname === path.pokemonList
+            css={pathname === path.pokemonList ||  headEP === 'page'
               ? ButtonContainerActive
               : ButtonContainer}
           >
-            <CgPokemon size="2em" css={pathname === path.pokemonList ? ButtonIconActive : ButtonIcon} />
+            <CgPokemon size="2em" css={pathname === path.pokemonList || headEP === 'page' ? ButtonIconActive : ButtonIcon} />
           </Link>
 
           <Link

@@ -86,16 +86,14 @@ export const Navbar = _ => {
       } else {
         setBgNavbar(NavBarContainer);
       }
-    });
+    });   // eslint-disable-next-line
   }, []);
-
-  // console.log()
 
   return (
     <div
       id="Navbar"
       css={NavBar}
-      style={pathname === path.notFound
+      style={pathname === path.notFound || headEP === 'pokemon'
         ? { display: 'none' }
         : { display: 'block' }}
     >

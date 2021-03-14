@@ -5,11 +5,26 @@ export const paginationCount = _ => {
     try {
       next({ type: 'LOADING' });
 
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+      const response = await fetch(url + '/pokemon');
       const { count } = await response.json();
 
       return next({ type: 'PAGINATION_COUNT', payload: count });
 
+    } catch (err) {
+      console.log(err);
+    };
+  };
+};
+
+export const fetchPokemonById = id => {
+  return async next => {
+    try {
+      next({ type: 'LOADING' });
+      next({ type: 'RESET_POKEMON_DETAIL' });
+
+      const response = await (await fetch(`${url}/pokemon/${id}`)).json();
+
+      return next({ type: 'GET_POKEMON_DETAIL', payload: response });
     } catch (err) {
       console.log(err);
     };
@@ -77,11 +92,7 @@ export const fetchTypePokemon = type => {
         })
       )
         .then(_ => Promise.all(
-          temp.map(e => {
-            e.pokemon.map(el => {
-              temp1.push(el.pokemon.url);
-            })
-          })
+          temp.map(e => e.pokemon.map(el => temp1.push(el.pokemon.url)))
         ))
         .then(_ => Promise.all(
           temp1.map(e => {
@@ -103,7 +114,6 @@ export const fetchTypePokemon = type => {
 export const fetchSearchPokemon = val => {
   return async next => {
     try {
-      // console.log(val)
       next({ type: 'LOADING' });
       next({ type: 'RESET_SEARCH_RESULT' });
 
@@ -128,7 +138,8 @@ export const fetchSearchPokemon = val => {
         .then(_ => {
           if (output.length === 0) output.push('notFound');
           return next({ type: 'GET_SEARCH_RESULT', payload: output });
-        });
+        })
+        .catch(err => console.log(err));
     } catch (err) {
       console.log(err);
     };
