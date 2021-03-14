@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { PokemonAbilities } from './PokemonAbilities';
 
 import { PokemonInfo } from './PokemonInfo';
 import { PokemonMove } from './PokemonMove';
@@ -50,7 +51,20 @@ export const PokemonDetailSpec = ({ props }) => {
               : { outline: 'none', color: '#0d6efd' }}
             onClick={() => history.push(`/pokemon/${props?.id}/stat`)}
           >
-            Stat
+            Stats
+          </button>
+        </li>
+        <li className="nav-item">
+          <button
+            className={indicator === 'abilities'
+              ? 'nav-link active'
+              : 'nav-link'}
+            style={indicator === 'abilities'
+              ? { outline: 'none' }
+              : { outline: 'none', color: '#0d6efd' }}
+            onClick={() => history.push(`/pokemon/${props?.id}/abilities`)}
+          >
+            Abilities
           </button>
         </li>
         <li className="nav-item">
@@ -63,7 +77,7 @@ export const PokemonDetailSpec = ({ props }) => {
               : { outline: 'none', color: '#0d6efd' }}
             onClick={() => history.push(`/pokemon/${props?.id}/move`)}
           >
-            Move
+            Moves
           </button>
         </li>
       </ul>
@@ -72,7 +86,9 @@ export const PokemonDetailSpec = ({ props }) => {
         ? <PokemonMove props={props} />
         : indicator === 'stat'
           ? <PokemonStat props={props} />
-          : <PokemonInfo props={props} />}
+          : indicator === 'abilities'
+            ? <PokemonAbilities props={props} />
+            : <PokemonInfo props={props} />}
     </div>
   );
 };

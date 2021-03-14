@@ -6,6 +6,7 @@ export const path = {
   pokemonDetail: '/pokemon/:pokemonid/info',
   pokemonMove: '/pokemon/:pokemonid/move',
   pokemonStat: '/pokemon/:pokemonid/stat',
+  pokemonAbilities: '/pokemon/:pokemonid/abilities',
   myPokemonList: '/mypokemon',
   notFound: '/404',
   placeholder: '*'

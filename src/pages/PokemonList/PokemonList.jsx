@@ -177,7 +177,7 @@ export const PokemonList = _ => {
       <div css={pokemonCardContainerWrapper}>
         {
           isLoading
-            ? new Array(4).fill().map((_, i) => <SkelPokemonCard key={i} />)
+            ? new Array(12).fill().map((_, i) => <SkelPokemonCard key={i} />)
             : pokemons?.map((e) => { return <PokemonCard key={e.id} props={e} /> })
         }
       </div>

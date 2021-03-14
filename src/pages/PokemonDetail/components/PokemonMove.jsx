@@ -4,9 +4,22 @@ import { css } from '@emotion/react';
 export const PokemonMove = ({ props }) => {
 
   const PokemonMoveCardContainer = css`
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+    @media only screen and (min-height: 568px) {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+      height: 55%;
+      padding: 12px;
+      overflow-x: auto; 
+    }
+    @media only screen and (max-height: 568px) {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+      height: 32%;
+      padding: 12px;
+      overflow-x: auto; 
+    }
   `;
 
   const PokemonMoveCard = css`
@@ -29,9 +42,8 @@ export const PokemonMove = ({ props }) => {
     }
   `;
 
-  console.log(props, '<<<<')
   return (
-    <div id="PokemonMove" style={{ height: '55%', padding: 12, overflowX: 'auto' }} css={PokemonMoveCardContainer}>
+    <div id="PokemonMove" css={PokemonMoveCardContainer}>
       {props?.moves?.map((e, i) => (
         <div css={PokemonMoveCard} key={i} >
           <p style={{ margin: 0, alignSelf: 'center' }}>{e?.move?.name}</p>
