@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { CgSearch } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { PokemonCard } from '../../components/layout/PokemonCard';
 import { SkelPokemonCard } from '../../components/helpers/SkelPokemonCard';
@@ -22,9 +22,7 @@ export const PokemonList = _ => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { listpage } = useParams();
-  const [curPage, setCurPage] = useState(1);
   const [arrPagination, setArrPagination] = useState([]);
-  const { pathname } = useLocation(); // For Query Search
 
   const handleSearchPage = _ => {
     return history.push(path.pokemonSearch);
@@ -50,7 +48,7 @@ export const PokemonList = _ => {
     } else {
       setArrPagination([1, '...', Number(listpage) - 1, Number(listpage), Number(listpage) + 1, '...', pages.length])
     };
-  }, [dispatch, Number(listpage)]);
+  }, [dispatch, listpage, pages.length]);
 
   useEffect(() => {
     dispatch(fetchAllType());

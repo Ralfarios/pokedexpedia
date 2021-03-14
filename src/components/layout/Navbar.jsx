@@ -86,10 +86,8 @@ export const Navbar = _ => {
       } else {
         setBgNavbar(NavBarContainer);
       }
-    });
+    });   // eslint-disable-next-line
   }, []);
-
-  // console.log()
 
   return (
     <div

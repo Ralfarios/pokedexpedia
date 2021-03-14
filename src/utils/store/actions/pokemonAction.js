@@ -77,11 +77,7 @@ export const fetchTypePokemon = type => {
         })
       )
         .then(_ => Promise.all(
-          temp.map(e => {
-            e.pokemon.map(el => {
-              temp1.push(el.pokemon.url);
-            })
-          })
+          temp.map(e => e.pokemon.map(el => temp1.push(el.pokemon.url)))
         ))
         .then(_ => Promise.all(
           temp1.map(e => {

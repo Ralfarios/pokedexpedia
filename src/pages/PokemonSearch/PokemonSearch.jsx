@@ -19,6 +19,7 @@ export const PokemonSearch = _ => {
     return fetchSearchPokemon(searchVal);
   };
 
+  // eslint-disable-next-line
   const delayedSearch = useCallback(debounce(updateSearch(), 1000), [searchVal]);
 
   const handleChangeSearch = e => {
@@ -30,7 +31,7 @@ export const PokemonSearch = _ => {
     dispatch(delayedSearch);
 
     return delayedSearch.cancel;
-  }, [searchVal, delayedSearch]);
+  }, [searchVal, dispatch, delayedSearch]);
 
   const PokemonListPage = css`
     @media only screen and (max-width: 575px) {
