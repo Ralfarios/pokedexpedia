@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { fetchPokemonById } from '../../utils/store/actions/pokemonAction';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
+import { PokemonDetailCatcher } from './components/PokemonDetailCatcher';
 import { PokemonDetailHeader } from './components/PokemonDetailHeader';
 import { PokemonDetailImage } from './components/PokemonDetailImage';
 import { PokemonDetailSpec } from './components/PokemonDetailSpec';
@@ -108,9 +109,7 @@ export const PokemonDetail = _ => {
 
       <PokemonDetailSpec props={pokemon} />
 
-      <div style={{ position: 'fixed', left: 0, bottom: 0, width: '100vw', padding: '0 24px 24px 24px' }}>
-        <button className="btn btn-primary w-100" style={{ borderRadius: '0.9rem' }}>Catch this!</button>
-      </div>
+      <PokemonDetailCatcher props={pokemon} />
 
     </div >
 
