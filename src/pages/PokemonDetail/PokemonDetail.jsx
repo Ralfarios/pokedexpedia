@@ -17,7 +17,7 @@ export const PokemonDetail = _ => {
   const { pokemon, errors, isLoading } = useSelector(state => state.pokemon);
   let metaTitle;
 
-  useEffect(() => {
+  useEffect(() => { // eslint-disable-next-line 
     metaTitle = '';
     dispatch(fetchPokemonById(pokemonid));
   }, [dispatch, pokemonid]);

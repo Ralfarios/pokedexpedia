@@ -11,7 +11,7 @@ import { getMyPokemons } from '../../../utils/store/actions/myPokemonAction';
 export const PokemonDetailHeader = ({ props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { myPokemons, myLoading, myErrors } = useSelector(state => state.myPokemon)
+  const { myPokemons } = useSelector(state => state.myPokemon)
 
   const handleCol = _ => {
     if (props?.types === undefined) return 'color: #fff;';

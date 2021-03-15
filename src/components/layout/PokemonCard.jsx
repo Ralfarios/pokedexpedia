@@ -1,9 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 
 export const PokemonCard = ({ props }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
+  const { myPokemons } = useSelector(state => state.myPokemon);
 
   const handleCol = _ => {
     if (props?.types === undefined) return 'color: #fff; background-color: #00d2d3;';
@@ -53,6 +58,14 @@ export const PokemonCard = ({ props }) => {
     };
   };
 
+  useEffect(() => {
+    dispatch(getMyPokemons());
+  }, [dispatch]);
+
+  const handleOwned = _ => {
+    return myPokemons?.filter(e => e.name === props?.name)
+  }
+
   const PokemonCardContainer = css`
     -webkit-tap-highlight-color: transparent;
     ${handleCol()}
@@ -84,7 +97,7 @@ export const PokemonCard = ({ props }) => {
       <div className="row" style={{ marginLeft: 12, marginRight: 12, paddingBottom: 12 }}>
         <div className="col-6" style={{ padding: 0, alignSelf: 'center' }}>
           <div style={{ margin: 4, backgroundColor: '#ffffffbf', color: 'black', borderRadius: 8, textAlign: 'center' }}>
-            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: 0</p>
+            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: {handleOwned().length}</p>
           </div>
           {props?.types?.map((e, i) => (
             <div key={i} style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>

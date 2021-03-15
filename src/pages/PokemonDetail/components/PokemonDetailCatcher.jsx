@@ -7,7 +7,7 @@ import { catchPokemon, getMyPokemons } from '../../../utils/store/actions/myPoke
 export const PokemonDetailCatcher = ({ props }) => {
   let newName;
 
-  const { myPokemons, myLoading, myErrors } = useSelector(state => state.myPokemon);
+  const { myPokemons } = useSelector(state => state.myPokemon);
   const dispatch = useDispatch();
 
   const handleCatch = _ => {
@@ -45,6 +45,14 @@ export const PokemonDetailCatcher = ({ props }) => {
           allowOutsideClick: false
         }).then(result => {
           if (result.isConfirmed) {
+
+
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 3000,
+            });
             const input = {
               id: 'newID',
               newName,
@@ -54,14 +62,14 @@ export const PokemonDetailCatcher = ({ props }) => {
               types: props?.types
             };
 
-            dispatch(catchPokemon(input));
+            for (let i = 0; i < myPokemons.length; i++) {
+              if (myPokemons[i].newName === newName) return Toast.fire({
+                icon: 'error',
+                title: 'Pokémon name is already exist!'
+              });
+            };
 
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top',
-              showConfirmButton: false,
-              timer: 3000,
-            });
+            dispatch(catchPokemon(input));
 
             return Toast.fire({
               icon: 'success',
@@ -90,8 +98,6 @@ export const PokemonDetailCatcher = ({ props }) => {
   useEffect(() => {
     dispatch(getMyPokemons());
   }, [dispatch]);
-
-  // console.log(myPokemons);
 
   return (
     <div id="PokemonDetailCatcher">
