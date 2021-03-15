@@ -97,7 +97,7 @@ export const PokemonDetail = _ => {
     </>
   )
 
-  metaTitle = `Pokédexpedia | ${pokemon?.name}`;
+  metaTitle = `Pokédexpedia | ${pokemon?.name?.charAt(0).toUpperCase()}${pokemon?.name?.slice(1)}`;
 
   return (
     <div id="PokemonDetail" css={PokemonDetailPage}>

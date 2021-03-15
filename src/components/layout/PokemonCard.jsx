@@ -106,10 +106,10 @@ export const PokemonCard = ({ props }) => {
             </div>
           ))}
         </div>
-        <div className="col-6" style={{ padding: 0 }}>
+        <div className="col-6" style={{ padding: 0, textAlign: 'center', alignSelf: 'center' }}>
           <img
             alt={props?.name}
-            style={{ width: '100%', zIndex: 1500 }}
+            style={{ width: '75%', height: 'auto', zIndex: 1500 }}
             src={!props?.sprites?.other['official-artwork']?.front_default
               ? props?.sprites?.front_default
               : props?.sprites?.other['official-artwork']?.front_default}
