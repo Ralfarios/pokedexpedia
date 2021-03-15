@@ -1,14 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { CgArrowLeft } from 'react-icons/cg';
 import { useEffect, useState } from 'react';
+import { CgArrowLeft, CgPokemon, CgHeart } from 'react-icons/cg';
 import { useHistory, useLocation } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
 
 import logo from '../../assets/images/img_logoPokeball.svg';
 import { path } from '../../routers/path';
+import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 
 export const Navbar = _ => {
+  const dispatch = useDispatch();
+  const { myPokemons } = useSelector(state => state.myPokemon);
+
   const NavBar = css`
     width: 100%;
     margin-right: auto;
@@ -46,11 +50,21 @@ export const Navbar = _ => {
     transition: .15s ease-in-out;
   `;
 
+  const NavBarButtonContainer = css`
+    @media only screen and (max-width: 575px) {
+      display: none;
+    }
+    @media only screen and (min-width: 575px) {
+      display: flex;
+    }
+  `;
+
   const BackButtonContainer = css`
     -webkit-tap-highlight-color: transparent;
     height: 36px;
     width: 36px;
     border-radius: 1.5rem;
+    text-align: center;
     justify-content: center;
     background-color: transparent;
     cursor: pointer;
@@ -70,6 +84,7 @@ export const Navbar = _ => {
   const headEP = pathname.split('/')[1]
 
   useEffect(() => {
+    dispatch(getMyPokemons());
     window.addEventListener('scroll', () => {
       if (window.scrollY < 10) {
         setBgNavbar(NavBarContainerTransparent);
@@ -84,7 +99,7 @@ export const Navbar = _ => {
         setBgNavbar(NavBarContainer);
       }
     });   // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   return (
     <div
@@ -95,12 +110,35 @@ export const Navbar = _ => {
         : { display: 'block' }}
     >
       <div css={bgNavbar}>
-        <div style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound || headEP === 'page'
-          ? { display: 'flex', }
-          : { display: 'none' }}
+        <div
+          style={pathname === path.pokemonList || pathname === path.myPokemonList || pathname === path.notFound || headEP === 'page'
+            ? { display: 'flex', justifyContent: 'space-between', width: '100%' }
+            : { display: 'none' }}
         >
-          <img src={logo} style={{ width: 36 }} alt="logo" />
-          <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédexpedia</h2>
+          <div style={{ display: 'flex' }}>
+            <img src={logo} style={{ width: 36 }} alt="logo" />
+            <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédexpedia</h2>
+          </div>
+
+          <div css={NavBarButtonContainer}>
+            <div
+              css={BackButtonContainer}
+              onClick={() => { history.push(path.pokemonList) }}
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
+              <CgPokemon size="30px" style={{ alignSelf: 'center' }} />
+            </div>
+            <div
+              css={BackButtonContainer}
+              onClick={() => { history.push(path.myPokemonList) }}
+              style={{ display: 'flex', justifyContent: 'center', marginLeft: '16px' }}
+            >
+              <div style={myPokemons.length === 0 ? { display: 'none' } : { backgroundColor: '#b6302f', position: 'absolute', right: 20, paddingLeft: 6, paddingRight: 6, borderRadius: '1.25em' }}>
+                <p style={{ margin: 0, fontSize: '.8rem', fontWeight: 600, color: 'white' }}>{myPokemons?.length}</p>
+              </div>
+              <CgHeart size="30px" style={{ alignSelf: 'center' }} />
+            </div>
+          </div>
         </div>
         <div
           css={BackButtonContainer}
