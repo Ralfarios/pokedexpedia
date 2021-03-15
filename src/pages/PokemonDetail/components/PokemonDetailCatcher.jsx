@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
+import { catchPokemon, getMyPokemons } from '../../../utils/store/actions/myPokemonAction';
+
 export const PokemonDetailCatcher = ({ props }) => {
+  let newName;
+
+  const { myPokemons, myLoading, myErrors } = useSelector(state => state.myPokemon);
+  const dispatch = useDispatch();
+
   const handleCatch = _ => {
     const gacha = Math.random().toFixed(2);
     Swal.fire({
@@ -29,14 +37,25 @@ export const PokemonDetailCatcher = ({ props }) => {
             autocapitalize: 'off'
           },
           showCancelButton: true,
-          confirmButtonText: 'Look up',
+          confirmButtonText: 'Submit',
           showLoaderOnConfirm: true,
           preConfirm: (name) => {
-            console.log(name)
+            newName = name;
           },
           allowOutsideClick: false
         }).then(result => {
           if (result.isConfirmed) {
+            const input = {
+              id: 'newID',
+              newName,
+              name: props?.name,
+              illust: props?.sprites?.other['official-artwork']?.front_default,
+              sprite: props?.sprites?.front_default,
+              types: props?.types
+            };
+
+            dispatch(catchPokemon(input));
+
             const Toast = Swal.mixin({
               toast: true,
               position: 'top',
@@ -44,7 +63,7 @@ export const PokemonDetailCatcher = ({ props }) => {
               timer: 3000,
             });
 
-            Toast.fire({
+            return Toast.fire({
               icon: 'success',
               title: 'Added to your Pokédex.'
             });
@@ -67,6 +86,12 @@ export const PokemonDetailCatcher = ({ props }) => {
       );
     });
   };
+
+  useEffect(() => {
+    dispatch(getMyPokemons());
+  }, [dispatch])
+
+  console.log(myPokemons);
 
   return (
     <div id="PokemonDetailCatcher">
