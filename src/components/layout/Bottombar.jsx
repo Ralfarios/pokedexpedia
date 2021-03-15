@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { Link, useLocation } from 'react-router-dom';
-import { path } from '../../routers/path';
 import { CgPokemon, CgHeart } from 'react-icons/cg';
+import { Link, useLocation } from 'react-router-dom';
+
+import { path } from '../../routers/path';
 
 export const Bottombar = _ => {
   const { pathname } = useLocation();
