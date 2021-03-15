@@ -11,11 +11,61 @@ export const PokemonDetailCatcher = ({ props }) => {
       didOpen: () => {
         Swal.showLoading()
       }
-    }).then((result) => {
-      if (gacha <= 0.50) return console.log('YOU FAILED!', gacha)
-      return console.log(props, gacha);
-    })
+    }).then(_ => {
+      if (gacha <= 0.50) return (
+        Swal.fire({
+          icon: 'error',
+          title: 'Oh no ...',
+          text: `This wild ${props?.name.charAt(0).toUpperCase()}${props?.name.slice(1)} got away!`,
+        })
+      );
 
+      return (
+        Swal.fire({
+          title: 'Pokémon catched!',
+          text: 'What should we name this Pokémon?',
+          input: 'text',
+          inputAttributes: {
+            autocapitalize: 'off'
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Look up',
+          showLoaderOnConfirm: true,
+          preConfirm: (name) => {
+            console.log(name)
+          },
+          allowOutsideClick: false
+        }).then(result => {
+          if (result.isConfirmed) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 3000,
+            });
+
+            Toast.fire({
+              icon: 'success',
+              title: 'Added to your Pokédex.'
+            });
+          };
+
+          if (result.isDismissed) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 3000,
+            });
+
+            Toast.fire({
+              icon: 'error',
+              title: 'Pokémon got away.'
+            });
+          };
+        })
+      );
+    });
   };
 
   return (
