@@ -10,7 +10,6 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './utils/store/index';
 
 import 'bootstrap';
-import '@popperjs/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Body = css`

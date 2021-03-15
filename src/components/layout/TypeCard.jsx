@@ -1,9 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import watermark from '../../assets/images/img_pokeballWhite.svg';
 import { path } from '../../routers/path';
+
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const TypeCard = ({ props }) => {
   const history = useHistory();
@@ -83,10 +86,27 @@ export const TypeCard = ({ props }) => {
     return history.push('/type/' + props.name);
   };
 
+  const WatermarkStyle = css`
+    pointerEvents: none;
+    userSelect: none;
+    alignSelf: center;
+    height: 56px;
+    width: 56px;
+    float: right;
+    marginRight: 12px;
+    opacity: 0.25;
+  `;
+
   return (
     <div id="TypeCard" css={TypeCardContainer} onClick={() => handleClick()}>
       <p style={{ userSelect: 'none', fontWeight: 600, margin: '24px 12px 24px 24px', fontSize: 20, alignSelf: 'center', textTransform: 'capitalize' }}>{props?.name}</p>
       <img id="watermarkImage" src={watermark} alt="watermark" style={{ pointerEvents: 'none', userSelect: 'none', alignSelf: 'center', height: 56, width: 56, float: 'right', marginRight: 12, opacity: 0.25 }} />
+      {/* <LazyLoadImage
+        alt="watermark"
+        style={{ pointerEvents: 'none', userSelect: 'none', alignSelf: 'center', height: 56, width: 56, float: 'right', marginRight: 12, opacity: 0.25 }}
+        src={watermark} // use normal <img> attributes as props
+        effect="blur"
+      /> */}
     </div>
   );
 };

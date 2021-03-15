@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { CgArrowLeft, CgPokemon, CgHeart } from 'react-icons/cg';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import logo from '../../assets/images/img_logoPokeball.svg';
 import { path } from '../../routers/path';
@@ -116,7 +117,14 @@ export const Navbar = _ => {
             : { display: 'none' }}
         >
           <div style={{ display: 'flex' }}>
-            <img src={logo} style={{ width: 36 }} alt="logo" />
+            {/* <img src={logo} style={{ width: 36, height: 36 }} alt="logo" /> */}
+            <LazyLoadImage
+              alt="logo"
+              height={36}
+              src={logo} // use normal <img> attributes as props
+              width={36}
+              effect="black-and-white"
+            />
             <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédexpedia</h2>
           </div>
 

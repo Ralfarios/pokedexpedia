@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { lazy, Suspense } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { MyPokemonCard } from './components/MyPokemonCard';
+// import { MyPokemonCard } from './components/MyPokemonCard';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
 import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
+
+const MyPokemonCard = lazy(() => import('./components/MyPokemonCard'));
 
 export const MyPokemonList = _ => {
   const dispatch = useDispatch();
@@ -52,9 +55,11 @@ export const MyPokemonList = _ => {
         <h2 style={{ marginTop: 0, marginBottom: 18, userSelect: 'none', fontWeight: 400 }}>Own: {!myPokemons ? '0' : myPokemons?.length}</h2>
       </div>
       {/** title/ */}
-      <div css={MyPokemonCardContainerWrapper}>
-        {myPokemons?.map((e) => <MyPokemonCard key={e?.UID} props={e} />)}
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div css={MyPokemonCardContainerWrapper}>
+          {myPokemons?.map((e) => <MyPokemonCard key={e?.UID} props={e} />)}
+        </div>
+      </Suspense>
     </div>
   );
 };
