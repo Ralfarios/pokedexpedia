@@ -89,9 +89,9 @@ export const PokemonDetailCatcher = ({ props }) => {
 
   useEffect(() => {
     dispatch(getMyPokemons());
-  }, [dispatch])
+  }, [dispatch]);
 
-  console.log(myPokemons);
+  // console.log(myPokemons);
 
   return (
     <div id="PokemonDetailCatcher">

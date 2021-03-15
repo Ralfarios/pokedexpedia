@@ -12,7 +12,7 @@ export const getMyPokemons = _ => {
   return async next => {
     try {
       const temp = localStorage.getItem('myPokemons');
-      return next({ type: 'GET_MY_POKEMON', payload: temp });
+      return next({ type: 'GET_MY_POKEMON', payload: JSON.parse(temp) });
     } catch (err) {
       console.log(err);
     };
