@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { BsInfo } from 'react-icons/bs'
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
+import Swal from 'sweetalert2';
 
-export const PokemonCard = ({ props }) => {
+import { releasePokemon } from '../../../utils/store/actions/myPokemonAction';
+
+export const MyPokemonCard = ({ props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { myPokemons } = useSelector(state => state.myPokemon);
 
   const handleCol = _ => {
     if (props?.types === undefined) return 'color: #fff; background-color: #00d2d3;';
@@ -69,23 +70,35 @@ export const PokemonCard = ({ props }) => {
     box-shadow: 0 .08rem .16rem rgba(0,0,0,.15);
     display: flex;
     flex-direction: column;
-    &:hover {
-      filter: brightness(75%);
-      transition: 300ms;
-    }
-    &:active {
-      filter: brightness(55%);
-      transition: 300ms;
-    }
   `;
 
-  useEffect(() => {
-    dispatch(getMyPokemons());
-  }, [dispatch]);
+  const handleRelease = UID => {
+    Swal.fire({
+      title: 'Are you sure want to release this Pokémon?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 3000
+        });
 
-  const handleOwned = _ => {
-    if (!myPokemons) return [];
-    return myPokemons?.filter(e => e.name === props?.name);
+        Toast.fire({
+          icon: 'success',
+          title: 'Pokémon released'
+        });
+        return dispatch(releasePokemon(UID));
+      };
+    });
+    return null;
   };
 
   const handleClick = id => {
@@ -93,12 +106,12 @@ export const PokemonCard = ({ props }) => {
   };
 
   return (
-    <div id="PokemonCard" css={PokemonCardContainer} onClick={_ => handleClick(props?.id)}>
-      <h3 style={{ margin: 12, marginBottom: 4, textOverflow: 'ellipsis', overflow: 'hidden', textTransform: 'capitalize' }}>{props?.name}</h3>
+    <div id="PokemonCard" css={PokemonCardContainer}>
+      <h3 style={{ margin: 12, marginBottom: 4, textOverflow: 'ellipsis', overflow: 'hidden', textTransform: 'capitalize' }}>{props?.newName}</h3>
       <div className="row" style={{ marginLeft: 12, marginRight: 12, paddingBottom: 12 }}>
         <div className="col-6" style={{ padding: 0, alignSelf: 'center' }}>
           <div style={{ margin: 4, backgroundColor: '#ffffffbf', color: 'black', borderRadius: 8, textAlign: 'center' }}>
-            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: {handleOwned()?.length}</p>
+            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>{props?.name}</p>
           </div>
           {props?.types?.map((e, i) => (
             <div key={i} style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>
@@ -110,11 +123,26 @@ export const PokemonCard = ({ props }) => {
           <img
             alt={props?.name}
             style={{ width: '75%', height: 'auto', zIndex: 1500 }}
-            src={!props?.sprites?.other['official-artwork']?.front_default
-              ? props?.sprites?.front_default
-              : props?.sprites?.other['official-artwork']?.front_default}
+            src={!props?.illust
+              ? props?.sprite
+              : props?.illust}
           />
         </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 16px 24px', }}>
+        <button
+          className="btn btn-dark btn-sm"
+          style={{ borderRadius: '.75rem' }}
+          onClick={_ => handleClick(props?.id)}
+        ><BsInfo style={{ color: 'white' }} />
+        </button>
+        <button
+          className="btn btn-dark w-100 btn-sm"
+          style={{ borderRadius: '.75rem', marginLeft: 12, overflow: 'hidden', textOverflow: 'ellipsis' }}
+          onClick={_ => handleRelease(props?.UID)}
+        >
+          Release
+        </button>
       </div>
     </div>
   );

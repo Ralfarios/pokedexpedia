@@ -68,9 +68,6 @@ export const Navbar = _ => {
   const { pathname } = useLocation();
   const [bgNavbar, setBgNavbar] = useState(NavBarContainerTransparent);
   const headEP = pathname.split('/')[1]
-  // console.log(pathname.split('/')[1])
-
-
 
   useEffect(() => {
     window.addEventListener('scroll', () => {

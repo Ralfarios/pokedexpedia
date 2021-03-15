@@ -4,6 +4,7 @@ import { CgSearch } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 import { PokemonCard } from '../../components/layout/PokemonCard';
 import { SkelPokemonCard } from '../../components/helpers/SkelPokemonCard';
@@ -174,13 +175,15 @@ export const PokemonList = _ => {
 
       {/** pokemon card */}
       <h5 style={{ marginBottom: 12 }}>Pokédex</h5>
-      <div css={pokemonCardContainerWrapper}>
-        {
-          isLoading
-            ? new Array(12).fill().map((_, i) => <SkelPokemonCard key={i} />)
-            : pokemons?.map((e) => { return <PokemonCard key={e.id} props={e} /> })
-        }
-      </div>
+      <SkeletonTheme color="#dedede" highlightColor="#eee">
+        <div css={pokemonCardContainerWrapper}>
+          {
+            isLoading
+              ? new Array(12).fill().map((_, i) => <SkelPokemonCard key={i} />)
+              : pokemons?.map((e) => { return <PokemonCard key={e.id} props={e} /> })
+          }
+        </div>
+      </SkeletonTheme>
 
       {/** pokemon card/ */}
 

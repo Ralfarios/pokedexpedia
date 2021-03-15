@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { fetchPokemonById } from '../../utils/store/actions/pokemonAction';
 import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
+import { PokemonDetailCatcher } from './components/PokemonDetailCatcher';
 import { PokemonDetailHeader } from './components/PokemonDetailHeader';
 import { PokemonDetailImage } from './components/PokemonDetailImage';
 import { PokemonDetailSpec } from './components/PokemonDetailSpec';
@@ -16,13 +17,13 @@ export const PokemonDetail = _ => {
   const { pokemon, errors, isLoading } = useSelector(state => state.pokemon);
   let metaTitle;
 
-  useEffect(() => {
+  useEffect(() => { // eslint-disable-next-line 
     metaTitle = '';
     dispatch(fetchPokemonById(pokemonid));
   }, [dispatch, pokemonid]);
 
   const handleCol = _ => {
-    if (pokemon?.types === undefined) return 'color: #fff; background-color: #00d2d3;';
+    if (pokemon?.types === undefined) return 'background-color: #00d2d3;';
     switch (pokemon?.types[0]?.type?.name) {
       case 'normal':
         return 'background-color: #00d2d3;';
@@ -96,7 +97,7 @@ export const PokemonDetail = _ => {
     </>
   )
 
-  metaTitle = `Pokédexpedia | ${pokemon?.name}`;
+  metaTitle = `Pokédexpedia | ${pokemon?.name?.charAt(0).toUpperCase()}${pokemon?.name?.slice(1)}`;
 
   return (
     <div id="PokemonDetail" css={PokemonDetailPage}>
@@ -108,9 +109,7 @@ export const PokemonDetail = _ => {
 
       <PokemonDetailSpec props={pokemon} />
 
-      <div style={{ position: 'fixed', left: 0, bottom: 0, width: '100vw', padding: '0 24px 24px 24px' }}>
-        <button className="btn btn-primary w-100" style={{ borderRadius: '0.9rem' }}>Catch this!</button>
-      </div>
+      <PokemonDetailCatcher props={pokemon} />
 
     </div >
 

@@ -78,13 +78,10 @@ export const TypeCard = ({ props }) => {
   `;
 
   const handleClick = _ => {
-    // return console.log(props);
     if (props.url === '/') return history.push(path.pokemonList);
 
     return history.push('/type/' + props.name);
   };
-
-  // console.log(props);
 
   return (
     <div id="TypeCard" css={TypeCardContainer} onClick={() => handleClick()}>
