@@ -13,7 +13,9 @@ export const MyPokemonReducer = (state = init, action) => {
     case 'GET_MY_POKEMON':
       return { ...state, myPokemons: action.payload, myLoading: false };
     case 'RELEASE_POKEMON':
-      return state;
+      const filter = state.myPokemons?.filter(e => e.UID !== action.payload);
+      localStorage.setItem('myPokemons', JSON.stringify(filter));
+      return { ...state, myPokemons: filter, myLoading: false };
     case 'SET_KEY_POKEMON':
       localStorage.setItem('myPokemons', '');
       return { ...state, myPokemons: [], myLoading: false };

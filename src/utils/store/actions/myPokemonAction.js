@@ -20,10 +20,10 @@ export const getMyPokemons = _ => {
   };
 };
 
-export const releasePokemon = _ => {
+export const releasePokemon = UID => {
   return async next => {
     try {
-      console.log('RELEASE THE KRAKEN!');
+      return next({ type: 'RELEASE_POKEMON', payload: UID });
     } catch (err) {
       console.log(err);
     };

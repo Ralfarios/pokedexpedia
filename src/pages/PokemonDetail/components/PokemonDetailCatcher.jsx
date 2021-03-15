@@ -63,7 +63,8 @@ export const PokemonDetailCatcher = ({ props }) => {
               timer: 3000,
             });
             const input = {
-              id: dateFront + dateBackDone,
+              id: props?.id,
+              UID: dateFront + dateBackDone,
               newName,
               name: props?.name,
               illust: props?.sprites?.other['official-artwork']?.front_default,

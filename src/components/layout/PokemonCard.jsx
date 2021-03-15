@@ -58,10 +58,6 @@ export const PokemonCard = ({ props }) => {
     };
   };
 
-  useEffect(() => {
-    dispatch(getMyPokemons());
-  }, [dispatch]);
-
   const PokemonCardContainer = css`
     -webkit-tap-highlight-color: transparent;
     ${handleCol()}
@@ -82,6 +78,10 @@ export const PokemonCard = ({ props }) => {
       transition: 300ms;
     }
   `;
+
+  useEffect(() => {
+    dispatch(getMyPokemons());
+  }, [dispatch]);
 
   const handleOwned = _ => {
     if (!myPokemons) return [];
