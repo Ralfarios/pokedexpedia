@@ -46,6 +46,15 @@ export const PokemonDetailCatcher = ({ props }) => {
         }).then(result => {
           if (result.isConfirmed) {
 
+            const dateString = new Date().toISOString();
+
+            const dateFront = dateString.split("T")[0].split("-").join("");
+            const dateBack = parseFloat(dateString.split("T")[1].split(":")[2])
+              .toFixed(2)
+              .split(".")
+              .join("");
+
+            const dateBackDone = dateBack.length < 4 ? `0${dateBack}` : `${dateBack}`;
 
             const Toast = Swal.mixin({
               toast: true,
@@ -54,7 +63,7 @@ export const PokemonDetailCatcher = ({ props }) => {
               timer: 3000,
             });
             const input = {
-              id: 'newID',
+              id: dateFront + dateBackDone,
               newName,
               name: props?.name,
               illust: props?.sprites?.other['official-artwork']?.front_default,
@@ -62,8 +71,8 @@ export const PokemonDetailCatcher = ({ props }) => {
               types: props?.types
             };
 
-            for (let i = 0; i < myPokemons.length; i++) {
-              if (myPokemons[i].newName === newName) return Toast.fire({
+            for (let i = 0; i < myPokemons?.length; i++) {
+              if (myPokemons[i]?.newName === newName) return Toast.fire({
                 icon: 'error',
                 title: 'Pokémon name is already exist!'
               });

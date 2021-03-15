@@ -62,10 +62,6 @@ export const PokemonCard = ({ props }) => {
     dispatch(getMyPokemons());
   }, [dispatch]);
 
-  const handleOwned = _ => {
-    return myPokemons?.filter(e => e.name === props?.name)
-  }
-
   const PokemonCardContainer = css`
     -webkit-tap-highlight-color: transparent;
     ${handleCol()}
@@ -87,6 +83,11 @@ export const PokemonCard = ({ props }) => {
     }
   `;
 
+  const handleOwned = _ => {
+    if (!myPokemons) return [];
+    return myPokemons?.filter(e => e.name === props?.name);
+  };
+
   const handleClick = id => {
     return history.push(`/pokemon/${id}/info`);
   };
@@ -97,7 +98,7 @@ export const PokemonCard = ({ props }) => {
       <div className="row" style={{ marginLeft: 12, marginRight: 12, paddingBottom: 12 }}>
         <div className="col-6" style={{ padding: 0, alignSelf: 'center' }}>
           <div style={{ margin: 4, backgroundColor: '#ffffffbf', color: 'black', borderRadius: 8, textAlign: 'center' }}>
-            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: {handleOwned().length}</p>
+            <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: {handleOwned()?.length}</p>
           </div>
           {props?.types?.map((e, i) => (
             <div key={i} style={{ margin: 4, backgroundColor: '#3a3a3abf', color: 'white', borderRadius: 8, textAlign: 'center' }}>

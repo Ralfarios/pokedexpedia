@@ -11,6 +11,7 @@ export const catchPokemon = pokemon => {
 export const getMyPokemons = _ => {
   return async next => {
     try {
+      if (!localStorage.getItem('myPokemons')) return next({ type: 'SET_KEY_POKEMON' });
       const temp = localStorage.getItem('myPokemons');
       return next({ type: 'GET_MY_POKEMON', payload: JSON.parse(temp) });
     } catch (err) {

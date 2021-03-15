@@ -90,6 +90,7 @@ export const PokemonDetailHeader = ({ props }) => {
   }, [dispatch]);
 
   const handleOwned = _ => {
+    if (!myPokemons) return [];
     return myPokemons?.filter(e => e.name === props?.name)
   }
 
@@ -116,7 +117,7 @@ export const PokemonDetailHeader = ({ props }) => {
           ))}
         </div>
         <div style={{ margin: 4, backgroundColor: '#ffffffbf', color: 'black', borderRadius: 8, textAlign: 'center' }}>
-          <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: {handleOwned().length}</p>
+          <p style={{ margin: 8, textOverflow: 'ellipsis', overflow: 'hidden', fontSize: '.75em', textTransform: 'capitalize' }}>Own: {handleOwned()?.length}</p>
         </div>
       </div>
     </div>
