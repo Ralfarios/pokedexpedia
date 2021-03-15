@@ -4,6 +4,7 @@ import { Global, css } from '@emotion/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Suspense } from 'react';
 
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
@@ -36,9 +37,11 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <Global styles={Body} />
-        <Global styles={CodeStyle} />
-        <App />
+        <Suspense fallback={<h1>Loading...</h1>} >
+          <Global styles={Body} />
+          <Global styles={CodeStyle} />
+          <App />
+        </Suspense>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

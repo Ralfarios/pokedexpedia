@@ -3,11 +3,8 @@ import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
-
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const PokemonCard = ({ props }) => {
   const dispatch = useDispatch();
@@ -112,13 +109,11 @@ export const PokemonCard = ({ props }) => {
         </div>
         <div className="col-6" style={{ padding: 0, textAlign: 'center', alignSelf: 'center' }}>
 
-          <LazyLoadImage
-            alt={props?.name}
+          <img alt={props?.name}
             style={{ width: '75%', height: 'auto', zIndex: 1500 }}
             src={!props?.sprites?.other['official-artwork']?.front_default
               ? props?.sprites?.front_default
               : props?.sprites?.other['official-artwork']?.front_default}
-            effect="blur"
           />
         </div>
       </div>
