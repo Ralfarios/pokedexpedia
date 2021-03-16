@@ -51,4 +51,5 @@ For this web application we are using:
 
 ## Credit
 - Code with ❤ by [Ralfarios (Muamar Al Farabi)](https://github.com/Ralfarios)
+- For API, thanks to https://pokeapi.co/ for providing me a descent Pokémon API
 - For UI Inspiration, thanks to [Saepul Nahwan @dribbble](https://dribbble.com/shots/6545819-Pokedex-App/attachments/6545819-Pokedex-App?mode=media)
