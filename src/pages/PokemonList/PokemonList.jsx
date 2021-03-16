@@ -19,11 +19,12 @@ import PokemonCard from '../../components/layout/PokemonCard';
 import TypeCard from '../../components/layout/TypeCard';
 
 const PokemonList = _ => {
+  let { listpage } = useParams();
+
   const itemsPerPage = 12;
   const { type, pokemons, pagination, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
   const history = useHistory();
-  const { listpage } = useParams();
   const [arrPagination, setArrPagination] = useState([]);
 
   const handleSearchPage = _ => {
@@ -36,12 +37,15 @@ const PokemonList = _ => {
   };
 
   const handlePage = page => {
+    console.log(page);
     history.push('/page/' + page)
   };
 
   useEffect(() => {
     dispatch(fetchAllPokemon((itemsPerPage * Number(listpage)) - itemsPerPage, itemsPerPage));
     dispatch(paginationCount());
+
+    isNaN(Number(listpage)) ? listpage = 1 : Number(listpage);
 
     if (Number(listpage) < 3) {
       setArrPagination([1, 2, 3, '...', pages.length])
@@ -141,8 +145,6 @@ const PokemonList = _ => {
 
   if (errors) return <h1>ERROR</h1>
 
-  // console.log(type)
-
   return (
     <div id="PokemonList" css={PokemonListPage}>
       <MetaDecorator title="Pokédexpedia | Home" desc="This is Pokemon List page, you can see all Pokemons in here" />
@@ -195,7 +197,7 @@ const PokemonList = _ => {
             <div
               className="page-link"
               style={{ cursor: 'pointer' }}
-              onClick={() => handlePage((prev) => prev === 0 ? prev : prev - 1)}
+              onClick={() => handlePage(Number(listpage) === 1 ? Number(listpage) : Number(listpage) - 1)}
             >&laquo;</div>
           </li>
           {arrPagination?.map((e, i) =>
@@ -219,7 +221,7 @@ const PokemonList = _ => {
             <div
               className="page-link"
               style={{ cursor: 'pointer' }}
-              onClick={() => handlePage((next) => next === pagination.length ? next : next + 1)}
+              onClick={() => handlePage(Number(listpage) === pages?.length ? Number(listpage) : Number(listpage) + 1)}
             >&raquo;</div>
           </li>
         </ul>
