@@ -35,6 +35,8 @@ For the detail, visit this UserList API Documentation
 ## Tech Stack and Package Used
 For this web application we are using:
  - [React](https://reactjs.org/) 
+ - [Emotion](https://emotion.sh/docs/introduction)
+ - [Bootstrap V5](https://getbootstrap.com/)
  - [React Helmet Async](https://www.npmjs.com/package/react-helmet-async)
  - [React Icons](https://react-icons.github.io/react-icons/)
  - [React Loading Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
