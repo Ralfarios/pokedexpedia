@@ -36,15 +36,13 @@ const PokemonList = _ => {
     pages.push(i);
   };
 
-  const handlePage = page => {
-    console.log(page);
-    history.push('/page/' + page)
-  };
+  const handlePage = page => history.push('/page/' + page);
 
   useEffect(() => {
     dispatch(fetchAllPokemon((itemsPerPage * Number(listpage)) - itemsPerPage, itemsPerPage));
     dispatch(paginationCount());
 
+    // eslint-disable-next-line
     isNaN(Number(listpage)) ? listpage = 1 : Number(listpage);
 
     if (Number(listpage) < 3) {
@@ -197,7 +195,11 @@ const PokemonList = _ => {
             <div
               className="page-link"
               style={{ cursor: 'pointer' }}
-              onClick={() => handlePage(Number(listpage) === 1 ? Number(listpage) : Number(listpage) - 1)}
+              onClick={() => handlePage(Number(listpage) === 1
+                ? Number(listpage)
+                : isNaN(Number(listpage))
+                  ? 1
+                  : Number(listpage) - 1)}
             >&laquo;</div>
           </li>
           {arrPagination?.map((e, i) =>
@@ -221,7 +223,11 @@ const PokemonList = _ => {
             <div
               className="page-link"
               style={{ cursor: 'pointer' }}
-              onClick={() => handlePage(Number(listpage) === pages?.length ? Number(listpage) : Number(listpage) + 1)}
+              onClick={() => handlePage(Number(listpage) === pages?.length
+                ? Number(listpage)
+                : isNaN(Number(listpage))
+                  ? pages?.length
+                  : Number(listpage) + 1)}
             >&raquo;</div>
           </li>
         </ul>
