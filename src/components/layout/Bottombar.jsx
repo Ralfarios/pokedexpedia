@@ -1,11 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { useEffect } from 'react';
 import { CgPokemon, CgHeart } from 'react-icons/cg';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 import { path } from '../../routers/path';
 
 const Bottombar = _ => {
+  const dispatch = useDispatch();
+  const { myPokemons } = useSelector(state => state.myPokemon);
   const { pathname } = useLocation();
   const headEP = pathname.split('/')[1]
 
@@ -77,6 +82,10 @@ const Bottombar = _ => {
     color: #222222;
   `;
 
+  useEffect(() => {
+    dispatch(getMyPokemons());
+  }, [dispatch]);
+
   return (
     <div
       id="Bottombar"
@@ -92,7 +101,7 @@ const Bottombar = _ => {
           <Link
             to={path.pokemonList}
             style={{ textDecoration: 'none', color: '#fff' }}
-            css={pathname === path.pokemonList ||  headEP === 'page'
+            css={pathname === path.pokemonList || headEP === 'page'
               ? ButtonContainerActive
               : ButtonContainer}
           >
@@ -106,6 +115,9 @@ const Bottombar = _ => {
               ? ButtonContainerActive
               : ButtonContainer}
           >
+            <div style={myPokemons.length === 0 ? { display: 'none' } : { backgroundColor: '#b6302f', position: 'absolute', right: 16, top: 10, paddingLeft: 6, paddingRight: 6, borderRadius: '1.25em', border: '2px solid white' }}>
+              <p style={{ margin: 0, fontSize: '.8rem', fontWeight: 600, color: 'white' }}>{myPokemons?.length}</p>
+            </div>
             <CgHeart size="2em" css={pathname === path.myPokemonList ? ButtonIconActive : ButtonIcon} />
           </Link>
         </div>
