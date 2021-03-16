@@ -9,7 +9,7 @@ import logo from '../../assets/images/img_logoPokeball.svg';
 import { path } from '../../routers/path';
 import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 
-export const Navbar = _ => {
+const Navbar = _ => {
   const dispatch = useDispatch();
   const { myPokemons } = useSelector(state => state.myPokemon);
 
@@ -116,7 +116,7 @@ export const Navbar = _ => {
             : { display: 'none' }}
         >
           <div style={{ display: 'flex' }}>
-            <img src={logo} style={{ width: 36 }} alt="logo" />
+            <img src={logo} style={{ width: 36, height: 36 }} alt="logo" />
             <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédexpedia</h2>
           </div>
 
@@ -153,3 +153,5 @@ export const Navbar = _ => {
     </div>
   );
 };
+
+export default Navbar;

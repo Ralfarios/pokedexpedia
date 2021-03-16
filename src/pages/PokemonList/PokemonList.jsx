@@ -6,10 +6,8 @@ import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { SkeletonTheme } from 'react-loading-skeleton';
 
-import { PokemonCard } from '../../components/layout/PokemonCard';
-import { SkelPokemonCard } from '../../components/helpers/SkelPokemonCard';
-import { TypeCard } from '../../components/layout/TypeCard';
-import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
+import MetaDecorator from '../../utils/helmet/MetaDecorator';
+import SkelPokemonCard from '../../components/helpers/SkelPokemonCard';
 import {
   fetchAllPokemon,
   fetchAllType,
@@ -17,7 +15,10 @@ import {
 } from '../../utils/store/actions/pokemonAction';
 import { path } from '../../routers/path';
 
-export const PokemonList = _ => {
+import PokemonCard from '../../components/layout/PokemonCard';
+import TypeCard from '../../components/layout/TypeCard';
+
+const PokemonList = _ => {
   const itemsPerPage = 12;
   const { type, pokemons, pagination, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
@@ -228,3 +229,5 @@ export const PokemonList = _ => {
     </div >
   );
 };
+
+export default PokemonList;

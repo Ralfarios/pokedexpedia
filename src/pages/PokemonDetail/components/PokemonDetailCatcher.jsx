@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 
 import { catchPokemon, getMyPokemons } from '../../../utils/store/actions/myPokemonAction';
 
-export const PokemonDetailCatcher = ({ props }) => {
+const PokemonDetailCatcher = ({ props }) => {
   let newName;
 
   const { myPokemons } = useSelector(state => state.myPokemon);
@@ -120,3 +120,5 @@ export const PokemonDetailCatcher = ({ props }) => {
     </div>
   );
 };
+
+export default PokemonDetailCatcher;

@@ -4,14 +4,15 @@ import { Global, css } from '@emotion/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Suspense } from 'react';
 
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './utils/store/index';
 
 import 'bootstrap';
-import '@popperjs/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import LoadingAnimSpec from './components/helpers/LoadingAnimSpec';
 
 const Body = css`
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
@@ -37,9 +38,16 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <Global styles={Body} />
-        <Global styles={CodeStyle} />
-        <App />
+        <Suspense
+          fallback={
+            <div style={{ height: '100vh', display: 'flex', justifyContent: 'center' }}>
+              <LoadingAnimSpec />
+            </div>}
+        >
+          <Global styles={Body} />
+          <Global styles={CodeStyle} />
+          <App />
+        </Suspense>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

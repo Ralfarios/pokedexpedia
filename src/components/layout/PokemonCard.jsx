@@ -3,9 +3,10 @@ import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 
-export const PokemonCard = ({ props }) => {
+const PokemonCard = ({ props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { myPokemons } = useSelector(state => state.myPokemon);
@@ -107,8 +108,8 @@ export const PokemonCard = ({ props }) => {
           ))}
         </div>
         <div className="col-6" style={{ padding: 0, textAlign: 'center', alignSelf: 'center' }}>
-          <img
-            alt={props?.name}
+
+          <img alt={props?.name}
             style={{ width: '75%', height: 'auto', zIndex: 1500 }}
             src={!props?.sprites?.other['official-artwork']?.front_default
               ? props?.sprites?.front_default
@@ -119,3 +120,5 @@ export const PokemonCard = ({ props }) => {
     </div>
   );
 };
+
+export default PokemonCard;

@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 import { releasePokemon } from '../../../utils/store/actions/myPokemonAction';
 
-export const MyPokemonCard = ({ props }) => {
+const MyPokemonCard = ({ props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -65,7 +65,6 @@ export const MyPokemonCard = ({ props }) => {
     width: 100%;
     height: auto;
     border-radius: 1.25rem;
-    cursor: pointer;
     transition: 300ms;
     box-shadow: 0 .08rem .16rem rgba(0,0,0,.15);
     display: flex;
@@ -147,3 +146,5 @@ export const MyPokemonCard = ({ props }) => {
     </div>
   );
 };
+
+export default MyPokemonCard;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const PokemonInfo = ({ props }) => {
+const PokemonInfo = ({ props }) => {
   return (
     <div id="PokemonInfo" style={{ height: '55%', padding: 12, overflowX: 'auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: 24, marginRight: 24 }}>
@@ -20,3 +20,5 @@ export const PokemonInfo = ({ props }) => {
     </div >
   );
 };
+
+export default PokemonInfo;

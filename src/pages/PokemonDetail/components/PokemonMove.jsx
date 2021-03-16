@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-export const PokemonMove = ({ props }) => {
+const PokemonMove = ({ props }) => {
 
   const PokemonMoveCardContainer = css`
     @media only screen and (min-height: 568px) {
@@ -52,3 +52,5 @@ export const PokemonMove = ({ props }) => {
     </div>
   );
 };
+
+export default PokemonMove;

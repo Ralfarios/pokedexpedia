@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { fetchPokemonById } from '../../utils/store/actions/pokemonAction';
-import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
-import { PokemonDetailCatcher } from './components/PokemonDetailCatcher';
-import { PokemonDetailHeader } from './components/PokemonDetailHeader';
-import { PokemonDetailImage } from './components/PokemonDetailImage';
-import { PokemonDetailSpec } from './components/PokemonDetailSpec';
+import MetaDecorator from '../../utils/helmet/MetaDecorator';
+import PokemonDetailCatcher from './components/PokemonDetailCatcher';
+import PokemonDetailHeader from './components/PokemonDetailHeader';
+import PokemonDetailImage from './components/PokemonDetailImage';
+import PokemonDetailSpec from './components/PokemonDetailSpec';
+import LoadingAnimSpec from '../../components/helpers/LoadingAnimSpec';
 
-export const PokemonDetail = _ => {
+const PokemonDetail = _ => {
   const dispatch = useDispatch();
   const { pokemonid } = useParams();
   const { pokemon, errors, isLoading } = useSelector(state => state.pokemon);
@@ -87,7 +88,9 @@ export const PokemonDetail = _ => {
   if (isLoading) return (
     <>
       <MetaDecorator title="Pokédexpedia" desc="This is Pokemon Detail page, you can see the detail about a pokemon in here." />
-      <h1>Loading ...</h1>
+      <div style={{ height: '100vh', display: 'flex', justifyContent: 'center' }}>
+        <LoadingAnimSpec />
+      </div>
     </>
   )
   if (errors) return (
@@ -115,3 +118,5 @@ export const PokemonDetail = _ => {
 
   );
 };
+
+export default PokemonDetail;

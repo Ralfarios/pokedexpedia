@@ -5,12 +5,13 @@ import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 
-import { SearchIllust } from '../../components/helpers/SearchIllust';
-import { PokemonCard } from '../../components/layout/PokemonCard';
-import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
+import MetaDecorator from '../../utils/helmet/MetaDecorator';
+import SearchIllust from '../../components/helpers/SearchIllust';
 import { fetchSearchPokemon, resetSearch } from '../../utils/store/actions/pokemonAction';
 
-export const PokemonSearch = _ => {
+import PokemonCard from '../../components/layout/PokemonCard';
+
+const PokemonSearch = _ => {
   const { searchResult, errors, isLoading } = useSelector(state => state.pokemon);
   const dispatch = useDispatch();
   const [searchVal, setSearchVal] = useState('');
@@ -144,7 +145,7 @@ export const PokemonSearch = _ => {
       {/** searchbar/ */}
 
       {/** search result card */}
-      {isLoading ? <h1>NowLoading</h1> :
+      {isLoading ? <SearchIllust props='loading' /> :
         searchResult[0] === 'notFound' ? <SearchIllust props='notFound' /> :
           searchResult[0] === 'insertKeyword' ? <SearchIllust props='insertKeyword' /> :
             <>
@@ -161,3 +162,5 @@ export const PokemonSearch = _ => {
     </div >
   );
 };
+
+export default PokemonSearch;

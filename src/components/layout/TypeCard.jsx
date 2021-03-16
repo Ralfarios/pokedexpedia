@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import watermark from '../../assets/images/img_pokeballWhite.svg';
 import { path } from '../../routers/path';
 
-export const TypeCard = ({ props }) => {
+const TypeCard = ({ props }) => {
   const history = useHistory();
 
   const handleCol = _ => {
@@ -90,3 +90,5 @@ export const TypeCard = ({ props }) => {
     </div>
   );
 };
+
+export default TypeCard;
