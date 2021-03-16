@@ -9,7 +9,7 @@ import logo from '../../assets/images/img_logoPokeball.svg';
 import { path } from '../../routers/path';
 import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 
-export const Navbar = _ => {
+const Navbar = _ => {
   const dispatch = useDispatch();
   const { myPokemons } = useSelector(state => state.myPokemon);
 
@@ -153,3 +153,5 @@ export const Navbar = _ => {
     </div>
   );
 };
+
+export default Navbar;

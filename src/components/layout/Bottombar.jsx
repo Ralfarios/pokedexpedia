@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { path } from '../../routers/path';
 
-export const Bottombar = _ => {
+const Bottombar = _ => {
   const { pathname } = useLocation();
   const headEP = pathname.split('/')[1]
 
@@ -115,3 +115,5 @@ export const Bottombar = _ => {
     </div>
   );
 };
+
+export default Bottombar;

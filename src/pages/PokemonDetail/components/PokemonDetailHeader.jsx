@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { path } from '../../../routers/path';
 import { getMyPokemons } from '../../../utils/store/actions/myPokemonAction';
 
-export const PokemonDetailHeader = ({ props }) => {
+const PokemonDetailHeader = ({ props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { myPokemons } = useSelector(state => state.myPokemon)
@@ -123,3 +123,5 @@ export const PokemonDetailHeader = ({ props }) => {
     </div>
   );
 };
+
+export default PokemonDetailHeader;

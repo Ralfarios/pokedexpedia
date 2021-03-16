@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const PokemonDetailImage = ({ props }) => {
+const PokemonDetailImage = ({ props }) => {
   return (
     <div id="PokemonDetailImage">
       <img
@@ -13,3 +13,5 @@ export const PokemonDetailImage = ({ props }) => {
     </div>
   );
 };
+
+export default PokemonDetailImage;

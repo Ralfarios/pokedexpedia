@@ -5,12 +5,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // import { MyPokemonCard } from './components/MyPokemonCard';
-import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
+import MetaDecorator from '../../utils/helmet/MetaDecorator';
 import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 
 const MyPokemonCard = lazy(() => import('./components/MyPokemonCard'));
 
-export const MyPokemonList = _ => {
+const MyPokemonList = _ => {
   const dispatch = useDispatch();
   const { myPokemons } = useSelector(state => state.myPokemon);
 
@@ -63,3 +63,5 @@ export const MyPokemonList = _ => {
     </div>
   );
 };
+
+export default MyPokemonList;

@@ -12,6 +12,7 @@ import { store } from './utils/store/index';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import LoadingAnimSpec from './components/helpers/LoadingAnimSpec';
 
 const Body = css`
   @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
@@ -37,7 +38,12 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <Suspense fallback={<h1>Loading...</h1>} >
+        <Suspense
+          fallback={
+            <div style={{ height: '100vh', display: 'flex', justifyContent: 'center' }}>
+              <LoadingAnimSpec />
+            </div>}
+        >
           <Global styles={Body} />
           <Global styles={CodeStyle} />
           <App />

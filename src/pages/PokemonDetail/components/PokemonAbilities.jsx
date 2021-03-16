@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-export const PokemonAbilities = ({ props }) => {
+const PokemonAbilities = ({ props }) => {
 
   const PokemonAbilitiesCardContainer = css`
     display: grid;
@@ -39,3 +39,5 @@ export const PokemonAbilities = ({ props }) => {
     </div>
   );
 };
+
+export default PokemonAbilities;

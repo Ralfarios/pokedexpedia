@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
-import { Bottombar } from './components/layout/Bottombar';
-import { Navbar } from './components/layout/Navbar';
 import { path } from './routers/path';
-import {
-  PokemonList,
-  PokemonDetail,
-  MyPokemonList,
-  NotFound,
-  PokemonSearch,
-  PokemonType
-} from './pages/index';
+
+const PokemonList = lazy(() => import('./pages/PokemonList/PokemonList'));
+const PokemonDetail = lazy(() => import('./pages/PokemonDetail/PokemonDetail'));
+const MyPokemonList = lazy(() => import('./pages/MyPokemonList/MyPokemonList'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+const PokemonSearch = lazy(() => import('./pages/PokemonSearch/PokemonSearch'));
+const PokemonType = lazy(() => import('./pages/PokemonType/PokemonType'));
+const Bottombar = lazy(() => import('./components/layout/Bottombar'))
+const Navbar = lazy(() => import('./components/layout/Navbar'))
 
 export const App = _ => {
   return (

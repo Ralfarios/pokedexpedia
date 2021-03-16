@@ -2,12 +2,12 @@
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router';
 
+import Button from '../../components/helpers/Button'
 import illustration from '../../assets/images/img_404snorlax.svg';
+import MetaDecorator from '../../utils/helmet/MetaDecorator';
 import { path } from '../../routers/path';
-import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
-import { Button } from '../../components/helpers/Button'
 
-export const NotFound = _ => {
+const NotFound = _ => {
   const history = useHistory();
 
   const illustrationStyle = css`
@@ -39,3 +39,5 @@ export const NotFound = _ => {
     </div>
   );
 };
+
+export default NotFound;

@@ -5,13 +5,14 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { SkeletonTheme } from 'react-loading-skeleton';
 
-import { PokemonCard } from '../../components/layout/PokemonCard';
-import { SkelPokemonCard } from '../../components/helpers/SkelPokemonCard';
-import { TypeCard } from '../../components/layout/TypeCard';
-import { MetaDecorator } from '../../utils/helmet/MetaDecorator';
+import MetaDecorator from '../../utils/helmet/MetaDecorator';
+import SkelPokemonCard from '../../components/helpers/SkelPokemonCard';
 import { fetchAllType, fetchTypePokemon } from '../../utils/store/actions/pokemonAction';
 
-export const PokemonType = _ => {
+import PokemonCard from '../../components/layout/PokemonCard';
+import TypeCard from '../../components/layout/TypeCard';
+
+const PokemonType = _ => {
   const { pokemontype } = useParams();
   const dispatch = useDispatch();
   const { type, pokemonsType, errors, isLoading } = useSelector(state => state.pokemon);
@@ -93,3 +94,5 @@ export const PokemonType = _ => {
     </div>
   );
 };
+
+export default PokemonType;

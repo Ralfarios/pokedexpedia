@@ -1,13 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { PokemonAbilities } from './PokemonAbilities';
+import { lazy, Suspense } from 'react';
+import LoadingAnimSpec from '../../../components/helpers/LoadingAnimSpec';
 
-import { PokemonInfo } from './PokemonInfo';
-import { PokemonMove } from './PokemonMove';
-import { PokemonStat } from './PokemonStat';
+const PokemonAbilities = lazy(() => import('./PokemonAbilities'));
+const PokemonInfo = lazy(() => import('./PokemonInfo'));
+const PokemonMove = lazy(() => import('./PokemonMove'));
+const PokemonStat = lazy(() => import('./PokemonStat'));
 
-export const PokemonDetailSpec = ({ props }) => {
+const PokemonDetailSpec = ({ props }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const indicator = pathname.split('/')[3];
@@ -82,13 +84,17 @@ export const PokemonDetailSpec = ({ props }) => {
         </li>
       </ul>
 
-      {indicator === 'move'
-        ? <PokemonMove props={props} />
-        : indicator === 'stat'
-          ? <PokemonStat props={props} />
-          : indicator === 'abilities'
-            ? <PokemonAbilities props={props} />
-            : <PokemonInfo props={props} />}
+      <Suspense fallback={<LoadingAnimSpec />} >
+        {indicator === 'move'
+          ? <PokemonMove props={props} />
+          : indicator === 'stat'
+            ? <PokemonStat props={props} />
+            : indicator === 'abilities'
+              ? <PokemonAbilities props={props} />
+              : <PokemonInfo props={props} />}
+      </Suspense>
     </div>
   );
 };
+
+export default PokemonDetailSpec;

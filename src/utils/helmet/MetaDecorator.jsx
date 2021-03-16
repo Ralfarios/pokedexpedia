@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-export const MetaDecorator = ({ title, desc }) => {
+const MetaDecorator = ({ title, desc }) => {
   return (
     <Helmet>
       <title>{title}</title>
@@ -9,3 +9,5 @@ export const MetaDecorator = ({ title, desc }) => {
     </Helmet>
   );
 };
+
+export default MetaDecorator;

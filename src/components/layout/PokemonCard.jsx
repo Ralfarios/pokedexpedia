@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { getMyPokemons } from '../../utils/store/actions/myPokemonAction';
 
-export const PokemonCard = ({ props }) => {
+const PokemonCard = ({ props }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { myPokemons } = useSelector(state => state.myPokemon);
@@ -120,3 +120,5 @@ export const PokemonCard = ({ props }) => {
     </div>
   );
 };
+
+export default PokemonCard;

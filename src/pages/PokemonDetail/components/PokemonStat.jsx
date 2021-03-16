@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const PokemonStat = ({ props }) => {
+const PokemonStat = ({ props }) => {
   return (
     <div id="PokemonStat" style={{ height: '55%', padding: 12, overflowX: 'auto' }}>
       {props?.stats?.map((e, i) => (
@@ -14,3 +14,5 @@ export const PokemonStat = ({ props }) => {
     </div >
   );
 };
+
+export default PokemonStat;

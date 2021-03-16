@@ -72,7 +72,7 @@ const handleDropShadow = props => {
   };
 };
 
-export const Button = styled.button`
+const Button = styled.button`
   -webkit-tap-highlight-color: transparent;
   display: inline-block;
   font-weight: 400;
@@ -123,4 +123,6 @@ export const Button = styled.button`
     pointer-events: none;
     opacity: 0.65;
   }
-`
+`;
+
+export default Button;
