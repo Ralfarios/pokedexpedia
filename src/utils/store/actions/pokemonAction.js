@@ -155,7 +155,9 @@ export const fetchAllType = _ => {
 
       const { results } = await response.json();
 
-      return await next({ type: 'GET_POKEMON_TYPE', payload: results });
+      const payload = results.slice(0, results.length - 2);
+
+      return await next({ type: 'GET_POKEMON_TYPE', payload });
     } catch (err) {
       console.log(err);
     };

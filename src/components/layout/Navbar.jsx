@@ -116,7 +116,7 @@ const Navbar = _ => {
             : { display: 'none' }}
         >
           <div style={{ display: 'flex' }}>
-            <img src={logo} style={{ width: 36, height: 36 }} alt="logo" />
+            <img src={logo} style={{ width: 36, height: 36, cursor: 'pointer' }} alt="logo" onClick={() => history.push(path.pokemonList)} />
             <h2 style={{ padding: 0, margin: 0, marginLeft: 16, alignSelf: 'center', userSelect: 'none' }}>Pokédexpedia</h2>
           </div>
 

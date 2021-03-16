@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import watermark from '../../assets/images/img_pokeballWhite.svg';
 import { path } from '../../routers/path';
 
 const TypeCard = ({ props }) => {
   const history = useHistory();
+  const { pathname } = useLocation();
+  const headEP = pathname.split('/')[1];
 
   const handleCol = _ => {
     if (props === undefined) return 'color: #fff; background-color: #00d2d3;';
@@ -80,7 +82,9 @@ const TypeCard = ({ props }) => {
   const handleClick = _ => {
     if (props.url === '/') return history.push(path.pokemonList);
 
-    return history.push('/type/' + props.name);
+    console.log(headEP);
+    if (headEP !== 'type') return history.push('/type/' + props.name);
+    return history.replace('/type/' + props.name);
   };
 
   return (

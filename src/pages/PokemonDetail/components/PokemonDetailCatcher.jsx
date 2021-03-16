@@ -65,7 +65,7 @@ const PokemonDetailCatcher = ({ props }) => {
             const input = {
               id: props?.id,
               UID: dateFront + dateBackDone,
-              newName,
+              newName: !newName ? props?.name?.slice(0, 3) + dateFront + dateBackDone : newName,
               name: props?.name,
               illust: props?.sprites?.other['official-artwork']?.front_default,
               sprite: props?.sprites?.front_default,
