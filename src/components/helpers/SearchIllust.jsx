@@ -1,4 +1,7 @@
 import React from 'react';
+
+import PokeBall from '../../assets/images/img_logoPokeball.svg';
+import Snorlax from '../../assets/images/img_404snorlax.svg';
 import LoadingAnimSpec from './LoadingAnimSpec';
 
 const SearchIllust = ({ props }) => {
@@ -6,10 +9,20 @@ const SearchIllust = ({ props }) => {
     <div id="SearchIllust" style={{ display: 'flex', justifyContent: 'center', height: 'calc(100% - 120px)' }}>
       <div style={{ alignSelf: 'center' }}>
         {props === 'notFound'
-          ? <h1>Not Founda</h1>
+          ? <div style={{ textAlign: 'center' }}>
+            <img src={Snorlax} alt="PokeKeyword" style={{ width: '100%' }} />
+            <p style={{ marginTop: 25 }}>
+              Pokémon <b style={{ color: '#275d5f' }}>Not Found</b>
+          </p>
+          </div>
           : props === 'loading'
             ? <LoadingAnimSpec />
-            : <h1>Insert Keyworda</h1>}
+            : <div style={{ textAlign: 'center' }}>
+              <img src={PokeBall} alt="PokeKeyword" style={{ width: '65%' }} />
+              <p style={{ marginTop: 25 }}>
+                Insert keyword, min <b style={{ color: '#b6302f' }}>4</b> characters!
+              </p>
+            </div>}
       </div>
     </div>
   );
