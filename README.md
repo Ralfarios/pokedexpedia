@@ -2,16 +2,17 @@
 
 Welcome to Pokédexpedia web application, where you can see detailed information about your favorite Pokémon. 
 
+## Demo
+For the demo, we use Firebase for hosting this web app.
+https://thepokedexpedia.web.app/
+
+## Features
 This Web application has a features:
  - See all Pokémons *(Not particular or by its type)*
  - Search for Pokémon by name
  - See detailed spec of Pokémon *(Name, Height, Weight, Types, Base Stats, Abilities and Moves)*
  - Catch them *(50% probability of success)*
  - Rename, and release from your Pokédex
-
-## Demo
-For the demo, we use Firebase for hosting this web app.
-https://thepokedexpedia.web.app/
 
 ## Developer?
 You too can help me to improve this web application by reporting or fixing the bugs, refactor the code, optimize the performance, etc.
