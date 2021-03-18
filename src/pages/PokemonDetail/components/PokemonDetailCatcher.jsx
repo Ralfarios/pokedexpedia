@@ -30,7 +30,7 @@ const PokemonDetailCatcher = ({ props }) => {
 
       return (
         Swal.fire({
-          title: 'Pokémon catched!',
+          title: 'Pokémon caught!',
           text: 'What should we name this Pokémon?',
           input: 'text',
           inputAttributes: {

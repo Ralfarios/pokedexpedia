@@ -48,7 +48,7 @@ const MyPokemonList = _ => {
 
   return (
     <div id="MyPokemonList" css={MyPokemonListPage}>
-      <MetaDecorator title="Pokédexpedia | My Pokédex" desc="This page is contain all of your catched pokemons" />
+      <MetaDecorator title="Pokédexpedia | My Pokédex" desc="This page is contain all of your caught pokemons" />
       {/** title */}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <h2 style={{ marginTop: 0, marginBottom: 18, userSelect: 'none' }}>My Pokédex</h2>
