@@ -22,7 +22,6 @@ Just Clone this repo, run `$ npm install` on repo dir, and good to go!
 check http://localhost:3000/ for development.
 
 ## Endpoints
-For the detail, visit this UserList API Documentation
 | Route                             | Description                            |
 | --------------------------------- | -------------------------------------- |
 | `/page/${pagenumber}`             | See all Pokémons                       |
